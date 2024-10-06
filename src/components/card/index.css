@@ -1,0 +1,63 @@
+.card-container {
+    width: 386px;
+    height: 444px;
+    padding-left: 40px;
+    padding-top: 20px;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+    border-radius: 6px;
+    
+    
+}
+
+.card-container:hover {
+    box-shadow: 0 4px 30px grey; /* Customize shadow as needed */
+}
+
+img{
+    max-width: 90%; 
+    max-height: 90%; 
+    object-fit: contain;
+}
+.text-container {
+    display: flex; /* Use flexbox for the text */
+    flex-direction: column; /* Stack name and price vertically */
+    margin-top: 10px; /* Space between image and text */
+}
+
+.item-name, 
+.item-price {
+    margin: 0; /* Remove default margins */
+}
+
+/* Optional: Adjust the space between name and price */
+.item-price {
+    margin-top: 2px; /* Close spacing between name and price */
+    font-weight: 600;
+}
+
+.out-of-stock {
+    opacity: 0.5; /* Reduce opacity to grey out */
+    pointer-events: none; /* Optional: Disable interaction */
+}
+
+.overlay{
+    position: absolute;
+    top: 40%;
+    right: 28%;
+    font-size: x-large;
+}
+
+.cart-icon {
+    position: absolute; /* Position cart icon absolutely */
+    bottom: 80px; /* Align to the bottom of the card */
+    right: 50px; /* Align to the right of the card */
+    display: none; /* Hide the cart icon by default */
+    width: 40px; /* Adjust the size of the cart icon as needed */
+    height: 40px; /* Adjust the size of the cart icon as needed */
+    
+}
+
+.card-container:hover .cart-icon {
+    display: block; /* Show the cart icon on hover */
+}
