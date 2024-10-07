@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Raleway:wght@400;700&display=swap');
+
+.product-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 100px; /* Make the gap flexible */
+    flex-wrap: wrap; /* Allow elements to wrap on smaller screens */
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-width: 300px;
+}
+
+.size p, .color p, .price-label {
+    font-family: 'Roboto Condensed', sans-serif; /* Roboto Condensed for the labels */
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.price-value {
+    font-family: 'Raleway', sans-serif; /* Raleway for the actual price */
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.size-options, .color-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 0;
+}
+
+.size-button, .color-button {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.size-button.selected {
+    background-color: black;
+    color: white;
+}
+
+.color-button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.color-button.selected {
+    border: 2px solid black;
+    transform: scale(1.1);
+}
+
+.price {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+}
+
+.addToCart{
+    background-color: #50C878;
+    color: white;
+    height: 50px;
+    font-weight: bold;
+    font-size:medium;
+    border: none;
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+
+}
+
+.addToCart:hover {
+    box-shadow: 0 0 4px 2px green; /* Slight highlight on hover */
+}
+
+.description{
+    font-weight: 500;
+
+}

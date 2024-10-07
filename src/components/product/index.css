@@ -1,0 +1,71 @@
+.product-gallery-container {
+    display: flex; /* Use flexbox for horizontal layout */
+    width: 750px;
+}
+
+.image-preview-container {
+    position: relative; /* For positioning the arrows */
+    flex: 1; /* Allow the image preview to take available space */
+    display: flex;
+    align-items: center; /* Center the image vertically */
+    margin-left: 50px;
+    width: 575px; /* Make the main image responsive */
+    height: 478px; /* Set a max height for the main image */
+}
+
+.main-image {
+    width: 100%; /* Make the main image responsive */
+    height: 100%; /* Set a max height for the main image */
+}
+
+.thumbnail-container {
+    display: flex; /* Use flexbox for the thumbnails */
+    flex-direction: column; /* Stack thumbnails vertically */
+    margin-left: 20px; /* Space between thumbnails and main image */
+}
+
+.thumbnail {
+    width: 79px; /* Set width for thumbnails */
+    height: 80px; /* Set height for thumbnails */
+    object-fit: cover; /* Maintain aspect ratio */
+    margin-bottom: 20px; /* Space between thumbnails */
+    cursor: pointer; /* Indicate that thumbnails are clickable */
+    transition: box-shadow 0.3s; /* Smooth transition for hover effect */
+} 
+
+.thumbnail.selected {
+    box-shadow: 0 0 5px 2px grey; /* Highlight the selected thumbnail without changing its size */
+    border-radius: 5px; /* Optional: keep rounded corners */
+}
+
+.thumbnail:hover {
+    box-shadow: 0 0 5px 2px lightgrey; /* Slight highlight on hover */
+}
+
+
+.arrow {
+    background: rgba(0, 0, 0, 0.6); /* Slightly lighter black background */
+    color: white;
+    border: 0px solid rgba(0, 0, 0, 0.4); /* Border with a lighter shade */
+    border-radius: 5px; /* Rounded corners for a smoother look */
+    padding: 5px 10px; /* Padding around the arrow */
+    cursor: pointer; /* Change cursor on hover */
+    font-size: 24px; /* Increase arrow size */
+    transition: background 0.3s; /* Transition for hover effect */
+}
+
+.arrow:hover {
+    background: rgba(0, 0, 0, 0.8); /* Darken background on hover */
+}
+
+.left-arrow {
+    position: absolute; /* Position the left arrow */
+    left: 9px; /* Adjust position as needed */
+    z-index: 1; /* Ensure it's above the image */
+}
+
+.right-arrow {
+    position: absolute; /* Position the right arrow */
+    right: 10px; /* Adjust position as needed */
+    z-index: 1; /* Ensure it's above the image */
+}
