@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "../../components/card";
-import NavBar from '../../components/navBar'
 import './index.css'
 
 const womenData = [
@@ -34,7 +33,6 @@ export default class Women extends React.Component {
   render() {
     return (
       <>
-        <NavBar/>
         
         <div className="items-container">
           <h1 className="title">Kids</h1>

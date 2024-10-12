@@ -1,13 +1,12 @@
 import React from "react";
 import Card from "../../components/card";
-import NavBar from '../../components/navBar'
-import './index.css'
+import "./index.css";
 
 const womenData = [
   {
     image: "./default",
     name: "Running shorts",
-    price: 50.00,
+    price: 50.0,
     inStock: true,
   },
   {
@@ -27,20 +26,19 @@ const womenData = [
     name: "Belt",
     price: 50.0,
     inStock: true,
-  }
+  },
 ];
 
 export default class Women extends React.Component {
   render() {
     return (
       <>
-        <NavBar/>
-        
         <div className="items-container">
           <h1 className="title">Women</h1>
-          {womenData.map((item, index)=> <Card key={index} {...item} />)}
+          {womenData.map((item, index) => (
+            <Card key={index} {...item} />
+          ))}
         </div>
-        
       </>
     );
   }

@@ -24,6 +24,11 @@
     padding-bottom: 20px;
     position: relative; /* Needed for the hover effect */
   }
+
+  .navbar-left h3 a {
+    text-decoration: none;
+    color: inherit;
+  }
   
   /* Hover effect to show the small green line starting from the center */
   .navbar-left h3::after {
