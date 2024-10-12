@@ -33,8 +33,8 @@ export default class Women extends React.Component {
   render() {
     return (
       <>
+        <h1 className="title">Women</h1>
         <div className="items-container">
-          <h1 className="title">Women</h1>
           {womenData.map((item, index) => (
             <Card key={index} {...item} />
           ))}
