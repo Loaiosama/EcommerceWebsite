@@ -37,7 +37,7 @@ export default class Women extends React.Component {
         <NavBar/>
         
         <div className="items-container">
-          <h1 className="title">Women</h1>
+          <h1 className="title">Men</h1>
           {womenData.map((item, index)=> <Card key={index} {...item} />)}
         </div>
         

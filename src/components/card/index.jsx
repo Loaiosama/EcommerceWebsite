@@ -20,7 +20,7 @@ export default class Card extends React.Component{
                         {this.props.name}
                     </p>
                     <p className='item-price'>
-                        {this.props.price.toFixed(2)}
+                        ${this.props.price.toFixed(2)}
                     </p>
 
                 </div>

@@ -1,0 +1,192 @@
+/* Style for the overall nav bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 60px;
+    flex-wrap: wrap;
+  }
+  
+  /* Style for the left section (menu items) */
+  .navbar-left {
+    display: flex;
+    gap: 30px;
+    margin-left: 8%; /* Move the left section to the right */
+  }
+  
+  /* Style for individual menu items */
+  .navbar-left h3 {
+    margin: 0;
+    font-size: 16px;
+    cursor: pointer;
+    color: rgb(62, 197, 62); /* Default green color */
+    padding-bottom: 20px;
+    position: relative; /* Needed for the hover effect */
+  }
+  
+  /* Hover effect to show the small green line starting from the center */
+  .navbar-left h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Start from the center */
+    transform: translateX(-50%); /* Center the line */
+    width: 0;
+    height: 2px;
+    background-color: rgb(62, 197, 62);
+    transition: width 0.3s ease; /* Smooth transition */
+  }
+  
+  /* On hover, the green line expands from the center */
+  .navbar-left h3:hover::after {
+    width: 100%; /* The green line will extend fully from the center */
+  }
+  
+  /* Active state with the green line already present */
+  .navbar-left h3.active::after {
+    width: 100%; /* The green line stays if the item is active */
+  }
+  
+  /* Style for the logo in the center */
+  .navbar-logo {
+    position: absolute; /* Use absolute positioning for the logo */
+    left: 50%;          /* Center the logo */
+    transform: translateX(-50%); /* Adjust to center */
+  }
+  
+  .navbar-logo img {
+    height: 40px; /* Adjust the size of the logo */
+    object-fit: contain;
+  }
+  
+  /* Style for the right section (cart icon) */
+  .navbar-right {
+    height: 30px;
+    width: 30px; /* Automatically adjust width to keep aspect ratio */
+    margin-right: 4%;
+  }
+  
+  /* Cart icon style */
+  .cart-icon-nav {
+    height: 30px;
+    width: 30px; /* Automatically adjust width to keep aspect ratio */
+    cursor: pointer;
+  }
+  
+  /* Modal styles for the cart */
+  .modal {
+    position: fixed;
+    top: 10%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Grey backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it is above everything */
+  }
+  
+  /* Cart content styles */
+  .cart-window {
+    background-color: white; /* Background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    padding: 20px; /* Inner padding */
+    width: 16%; /* Modal width */
+    height: 40%;
+    max-height: 80%; /* Maximum height for modal */
+    overflow-y: auto; /* Enable scrolling if content is too tall */
+    margin-left: 75%;
+    margin-bottom: 25.3%;
+  }
+  
+  /* Style for cart items */
+  .cart-window h4 {
+    margin: 0 0 10px 0; /* Margin for heading */
+  }
+  
+  .cart-window ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+  }
+  
+  .cart-window li {
+    padding: 5px 0; /* Padding for list items */
+  }
+  
+  /* Close button style */
+  .cart-window button {
+    margin-top: 10px; /* Margin for the button */
+    padding: 5px 10px; /* Padding for the button */
+    background-color: rgb(62, 197, 62); /* Button color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 3px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .navbar-left {
+      gap: 20px; /* Reduce the gap between menu items */
+    }
+  
+    .navbar-logo img {
+      height: 30px; /* Adjust logo size on smaller screens */
+    }
+  
+    .cart-icon {
+      height: 25px; /* Reduce the cart icon size */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navbar {
+      flex-direction: column; /* Stack the items vertically on smaller screens */
+      align-items: center;
+    }
+  
+    .navbar-left {
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+  
+    .navbar-logo img {
+      height: 25px;
+    }
+  
+    .cart-icon {
+      height: 20px;
+    }
+  }
+  
+  /* Style for the cart items */
+.cart-items {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+/* Style for each cart item */
+.cart-item {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between details and image */
+    align-items: center; /* Center align items vertically */
+    padding: 10px 0; /* Padding for list items */
+    border-bottom: 1px solid #ddd; /* Optional: add a separator between items */
+    
+}
+
+/* Style for the item details */
+.cart-item-details {
+    flex: 1; /* Allow details to take available space */
+}
+
+/* Style for the product image */
+.cart-item-image {
+    height: 100px; /* Adjust image size */
+    width: auto; /* Maintain aspect ratio */
+    margin-left: 20px; /* Space between details and image */
+}
