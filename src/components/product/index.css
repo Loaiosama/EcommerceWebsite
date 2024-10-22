@@ -1,6 +1,9 @@
 .product-gallery-container {
     display: flex; /* Use flexbox for horizontal layout */
-    width: 750px;
+    /* width:60%; */
+    max-width: 90%;
+    max-height: 500px;
+    /* width:700px; */
 }
 
 .image-preview-container {
@@ -10,7 +13,7 @@
     align-items: center; /* Center the image vertically */
     margin-left: 50px;
     width: 575px; /* Make the main image responsive */
-    height: 478px; /* Set a max height for the main image */
+    height: 100%    ; /* Set a max height for the main image */
 }
 
 .main-image {
@@ -21,7 +24,6 @@
 .thumbnail-container {
     display: flex; /* Use flexbox for the thumbnails */
     flex-direction: column; /* Stack thumbnails vertically */
-    margin-left: 20px; /* Space between thumbnails and main image */
 }
 
 .thumbnail {

@@ -5,6 +5,7 @@
     justify-content: flex-start;
     gap: 100px; /* Make the gap flexible */
     flex-wrap: wrap; /* Allow elements to wrap on smaller screens */
+    margin-top: 4%;
 }
 
 .product-info {

@@ -14,27 +14,30 @@ export default class NavBar extends React.Component {
     cartItems: [
       {
         id: 1,
-        name: "Product 1",
-        price: "$29.99",
+        name: "Running shorts",
+        price: 29.99,
         size: "M",
         color: "Red",
         image: productImage1,
+        quantity: 1, // Initialize quantity for each item
       },
       {
         id: 2,
         name: "Product 2",
-        price: "$39.99",
+        price: 39.99,
         size: "L",
         color: "Blue",
         image: productImage2,
+        quantity: 1,
       },
       {
         id: 3,
         name: "Product 3",
-        price: "$19.99",
+        price: 19.99,
         size: "S",
         color: "Green",
         image: productImage3,
+        quantity: 1,
       },
     ],
   };
@@ -49,7 +52,39 @@ export default class NavBar extends React.Component {
     }));
   };
 
+  incrementQuantity = (id) => {
+    this.setState((prevState) => ({
+      cartItems: prevState.cartItems.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    }));
+  };
+
+  decrementQuantity = (id) => {
+    this.setState((prevState) => {
+      const item = prevState.cartItems.find((item) => item.id === id);
+      if (item && item.quantity > 1) {
+        return {
+          cartItems: prevState.cartItems.map((item) =>
+            item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+          ),
+        };
+      } else {
+        // Remove item from cart if quantity is 1 or less
+        return {
+          cartItems: prevState.cartItems.filter((item) => item.id !== id),
+        };
+      }
+    });
+  };
+
+  getTotalItems = () => {
+    return this.state.cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
   render() {
+    const totalItems = this.getTotalItems(); // Get total items count
+
     return (
       <>
         <nav className="navbar">
@@ -91,23 +126,46 @@ export default class NavBar extends React.Component {
         {this.state.cartVisible && (
           <div className="modal" onClick={this.toggleCartVisibility}>
             <div className="cart-window" onClick={(e) => e.stopPropagation()}>
-              {" "}
-              {/* Prevent clicks on modal content from closing it */}
-              <h4>My Bag</h4>
+              <h4>
+                My Bag. {totalItems > 0 && `${totalItems} items`} {/* Display total items */}
+              </h4>
               <ul className="cart-items">
                 {this.state.cartItems.map((item) => (
                   <li key={item.id} className="cart-item">
                     <div className="cart-item-details">
-                      <h5>{item.name}</h5>
-                      <p>{item.price}</p>
-                      <p>Size: {item.size}</p>
-                      <p>Color: {item.color}</p>
+                      <h3 className="product-name-cart">{item.name}</h3>
+                      <p className="cart-item-price">${item.price}</p>
+                      <div className='size-cart'>
+                        <p>SIZE:</p>
+                        <span>{item.size}</span>
+                      </div>
+                      <div className='color-cart'>
+                        <p>COLOR:</p>
+                        <span style={{ backgroundColor: item.color.toLowerCase() }} className="color-swatch-cart"></span>
+                      </div>
                     </div>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="cart-item-image"
-                    />
+                    <div className="cart-image-container">
+                      <div className="quantity-control">
+                        <button
+                          className="arrow-button"
+                          onClick={() => this.incrementQuantity(item.id)}
+                        >
+                          +
+                        </button>
+                        <span>{item.quantity}</span>
+                        <button
+                          className="arrow-button"
+                          onClick={() => this.decrementQuantity(item.id)}
+                        >
+                          -
+                        </button>
+                      </div>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="cart-item-image"
+                      />
+                    </div>
                   </li>
                 ))}
               </ul>

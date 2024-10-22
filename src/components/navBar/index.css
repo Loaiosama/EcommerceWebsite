@@ -1,197 +1,257 @@
 /* Style for the overall nav bar */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    height: 60px;
-    flex-wrap: wrap;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  height: 60px;
+  flex-wrap: wrap;
+}
+
+/* Style for the left section (menu items) */
+.navbar-left {
+  display: flex;
+  gap: 30px;
+}
+
+/* Style for individual menu items */
+.navbar-left h3 {
+  margin: 0;
+  font-size: 16px;
+  cursor: pointer;
+  color: rgb(62, 197, 62); /* Default green color */
+  padding-bottom: 20px;
+  position: relative; /* Needed for the hover effect */
+}
+
+.navbar-left h3 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hover effect to show the small green line starting from the center */
+.navbar-left h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%; /* Start from the center */
+  transform: translateX(-50%); /* Center the line */
+  width: 0;
+  height: 2px;
+  background-color: rgb(62, 197, 62);
+  transition: width 0.3s ease; /* Smooth transition */
+}
+
+/* On hover, the green line expands from the center */
+.navbar-left h3:hover::after {
+  width: 100%; /* The green line will extend fully from the center */
+}
+
+/* Active state with the green line already present */
+.navbar-left h3.active::after {
+  width: 100%; /* The green line stays if the item is active */
+}
+
+/* Style for the logo in the center */
+.navbar-logo {
+  position: absolute; /* Use absolute positioning for the logo */
+  left: 50%; /* Center the logo */
+  transform: translateX(-50%); /* Adjust to center */
+}
+
+.navbar-logo img {
+  height: 40px; /* Adjust the size of the logo */
+  object-fit: contain;
+}
+
+/* Style for the right section (cart icon) */
+.navbar-right {
+  height: 30px;
+  width: 30px; /* Automatically adjust width to keep aspect ratio */
+}
+
+/* Cart icon style */
+.cart-icon-nav {
+  height: 30px;
+  width: 30px; /* Automatically adjust width to keep aspect ratio */
+  cursor: pointer;
+}
+
+/* Modal styles for the cart */
+.modal {
+  position: fixed;
+  top: 68px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Grey backdrop */
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  z-index: 1000; /* Ensure it is above everything */
+}
+
+/* Cart content styles */
+.cart-window {
+  background-color: white; /* Background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  padding: 20px; /* Inner padding */
+  width: 20%; /* Modal width */
+  max-height: 80%; /* Maximum height for modal */
+  overflow-y: auto; /* Enable scrolling if content is too tall */
+  margin-left: 75%;
+}
+
+/* Style for cart items */
+.cart-window h4 {
+  margin: 0 0 10px 0; /* Margin for heading */
   
-  /* Style for the left section (menu items) */
+}
+
+.cart-window ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+}
+
+.cart-window li {
+  padding: 5px 0; /* Padding for list items */
+}
+
+/* Close button style */
+/* .cart-window button {
+  margin-top: 10px;
+  padding: 5px 10px; 
+  background-color: rgb(62, 197, 62); 
+  color: white; 
+  border: none; 
+  border-radius: 3px; 
+  cursor: pointer; 
+} */
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
   .navbar-left {
-    display: flex;
-    gap: 30px;
-    margin-left: 8%; /* Move the left section to the right */
-  }
-  
-  /* Style for individual menu items */
-  .navbar-left h3 {
-    margin: 0;
-    font-size: 16px;
-    cursor: pointer;
-    color: rgb(62, 197, 62); /* Default green color */
-    padding-bottom: 20px;
-    position: relative; /* Needed for the hover effect */
+    gap: 20px; /* Reduce the gap between menu items */
   }
 
-  .navbar-left h3 a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  /* Hover effect to show the small green line starting from the center */
-  .navbar-left h3::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%; /* Start from the center */
-    transform: translateX(-50%); /* Center the line */
-    width: 0;
-    height: 2px;
-    background-color: rgb(62, 197, 62);
-    transition: width 0.3s ease; /* Smooth transition */
-  }
-  
-  /* On hover, the green line expands from the center */
-  .navbar-left h3:hover::after {
-    width: 100%; /* The green line will extend fully from the center */
-  }
-  
-  /* Active state with the green line already present */
-  .navbar-left h3.active::after {
-    width: 100%; /* The green line stays if the item is active */
-  }
-  
-  /* Style for the logo in the center */
-  .navbar-logo {
-    position: absolute; /* Use absolute positioning for the logo */
-    left: 50%;          /* Center the logo */
-    transform: translateX(-50%); /* Adjust to center */
-  }
-  
   .navbar-logo img {
-    height: 40px; /* Adjust the size of the logo */
-    object-fit: contain;
+    height: 30px; /* Adjust logo size on smaller screens */
   }
-  
-  /* Style for the right section (cart icon) */
-  .navbar-right {
-    height: 30px;
-    width: 30px; /* Automatically adjust width to keep aspect ratio */
-    margin-right: 4%;
+
+  .cart-icon {
+    height: 25px; /* Reduce the cart icon size */
   }
-  
-  /* Cart icon style */
-  .cart-icon-nav {
-    height: 30px;
-    width: 30px; /* Automatically adjust width to keep aspect ratio */
-    cursor: pointer;
-  }
-  
-  /* Modal styles for the cart */
-  .modal {
-    position: fixed;
-    top: 10%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Grey backdrop */
-    display: flex;
-    justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column; /* Stack the items vertically on smaller screens */
     align-items: center;
-    z-index: 1000; /* Ensure it is above everything */
   }
-  
-  /* Cart content styles */
-  .cart-window {
-    background-color: white; /* Background color */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-    padding: 20px; /* Inner padding */
-    width: 16%; /* Modal width */
-    height: 40%;
-    max-height: 80%; /* Maximum height for modal */
-    overflow-y: auto; /* Enable scrolling if content is too tall */
-    margin-left: 75%;
-    margin-bottom: 25.3%;
+
+  .navbar-left {
+    justify-content: center;
+    margin-bottom: 10px;
   }
-  
-  /* Style for cart items */
-  .cart-window h4 {
-    margin: 0 0 10px 0; /* Margin for heading */
+
+  .navbar-logo img {
+    height: 25px;
   }
-  
-  .cart-window ul {
-    list-style-type: none; /* Remove bullet points */
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margin */
+
+  .cart-icon {
+    height: 20px;
   }
-  
-  .cart-window li {
-    padding: 5px 0; /* Padding for list items */
-  }
-  
-  /* Close button style */
-  .cart-window button {
-    margin-top: 10px; /* Margin for the button */
-    padding: 5px 10px; /* Padding for the button */
-    background-color: rgb(62, 197, 62); /* Button color */
-    color: white; /* Text color */
-    border: none; /* No border */
-    border-radius: 3px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-  }
-  
-  /* Responsive design for smaller screens */
-  @media (max-width: 768px) {
-    .navbar-left {
-      gap: 20px; /* Reduce the gap between menu items */
-    }
-  
-    .navbar-logo img {
-      height: 30px; /* Adjust logo size on smaller screens */
-    }
-  
-    .cart-icon {
-      height: 25px; /* Reduce the cart icon size */
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .navbar {
-      flex-direction: column; /* Stack the items vertically on smaller screens */
-      align-items: center;
-    }
-  
-    .navbar-left {
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-  
-    .navbar-logo img {
-      height: 25px;
-    }
-  
-    .cart-icon {
-      height: 20px;
-    }
-  }
-  
-  /* Style for the cart items */
+}
+
+/* Style for the cart items */
 .cart-items {
-    list-style-type: none; /* Remove bullet points */
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margin */
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
 }
 
 /* Style for each cart item */
 .cart-item {
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Space between details and image */
-    align-items: center; /* Center align items vertically */
-    padding: 10px 0; /* Padding for list items */
-    border-bottom: 1px solid #ddd; /* Optional: add a separator between items */
-    
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space between details and image */
+  align-items: center; /* Center align items vertically */
+  padding: 10px 0; /* Padding for list items */
+  border-bottom: 1px solid #ddd; /* Optional: add a separator between items */
 }
 
 /* Style for the item details */
 .cart-item-details {
-    flex: 1; /* Allow details to take available space */
+  flex: 1; /* Allow details to take available space */
+}
+
+/* Style for the product image */
+
+
+/* Adjust the cart image container for better positioning of the quantity controls */
+.cart-image-container {
+  display: flex;
+  align-items: center; /* Center align the image and controls */
+  position: relative;
+  gap: 10px; /* Add some space between the arrows and the image */
+}
+
+/* Style for the quantity control section (up/down arrows and number) */
+.quantity-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arrow-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px; /* Adjust arrow size */
+  padding: 2px 4px;
+}
+
+.quantity-control span {
+  font-size: 16px;
+  margin: 5px 0;
 }
 
 /* Style for the product image */
 .cart-item-image {
-    height: 100px; /* Adjust image size */
-    width: auto; /* Maintain aspect ratio */
-    margin-left: 20px; /* Space between details and image */
+  height: 100px;
+  width: auto;
+  display: block;
 }
+
+.size-cart p, .color-cart p {
+  font-weight: normal;
+  margin-bottom: 5px;
+  
+}
+
+.size-cart {
+  margin-top: 5px;
+}
+
+.color-cart {
+  margin-top: 5px;
+}
+
+.color-swatch-cart {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.product-name-cart{
+  font-weight: 100;
+  font-family: 'Raleway';
+}
+
+.cart-item-price{
+  font-weight:500;
+}
+
