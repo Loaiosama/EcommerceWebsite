@@ -1,33 +1,38 @@
 import React from "react";
 import Card from "../../components/card";
+import RainCoat from "../../assets/Rain coat.png"
+import RunningShoes from "../../assets/Running shoes.jpg"
+import RunningShorts from "../../assets/Running shorts.webp"
+import sweater from "../../assets/sweater1.png"
+
 import "./index.css";
 
 const womenData = [
   {
     id: 1,
-    image: "./default",
-    name: "Running shorts",
+    image: sweater,
+    name: "Sweater",
     price: 50.0,
     inStock: true,
   },
   {
     id: 2,
-    image: "./default",
-    name: "Running Shoes",
+    image: RunningShorts,
+    name: "Running shorts",
     price: 50.0,
     inStock: false,
   },
   {
     id: 3,
-    image: "./default",
+    image: RainCoat,
     name: "Rain coat",
     price: 50.0,
     inStock: false,
   },
   {
     id: 4,
-    image: "./default",
-    name: "Belt",
+    image: RunningShoes,
+    name: "Running Shoes",
     price: 50.0,
     inStock: true,
   },

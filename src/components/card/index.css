@@ -1,14 +1,13 @@
 .card-container {
-    /* max-width: 386px; */
-    max-width: 346px;
-    max-height: 424px;
-    padding-left: 3%;
-    padding-right: 3%;
+    width: 336px;
+    /* height: 424px; */
+    height: 394px;
+    padding-left: 10px;
+    padding-right: 10px;
     padding-top: 20px;
     transition: box-shadow 0.3s ease;
     position: relative;
     border-radius: 6px;
-    margin-right: 15px;
 }
 
 .card-container:hover {
@@ -18,14 +17,13 @@
 .img-container {
     position: relative; /* Make this container the reference for the cart icon's position */
     width: 100%; /* Ensures the container takes the full width */
-    max-height: 90%; /* Set maximum height to prevent overflowing */
-
+    height: 65%; /* Set maximum height to prevent overflowing */
 }
 
 img {
     width: 100%; 
-    height: auto; /* Allow image to scale while maintaining aspect ratio */
-    object-fit: contain;
+    height: 100%; /* Allow image to scale while maintaining aspect ratio */
+    object-fit: cover;
     display: block;
     margin: auto;
 }
@@ -33,7 +31,7 @@ img {
 .text-container {
     display: flex; /* Use flexbox for the text */
     flex-direction: column; /* Stack name and price vertically */
-    margin-top: 10px; /* Space between image and text */
+    margin-top: 40px; /* Space between image and text */
 }
 
 .item-name, 

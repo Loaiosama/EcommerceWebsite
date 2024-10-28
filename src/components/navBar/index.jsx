@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import "./index.css";
 import logo from "../../assets/logo.png"; // Example logo image
 import cart from "../../assets/shopping-cart.png"; // Cart icon
-import productImage1 from "../../assets/jupiter.png"; // Example product image
-import productImage2 from "../../assets/jupiter.png"; // Example product image
+import productImage1 from "../../assets/sweater1.png"; // Example product image
+import productImage2 from "../../assets/Running shorts.webp"; // Example product image
 import productImage3 from "../../assets/jupiter.png"; // Example product image
 
 export default class NavBar extends React.Component {
@@ -14,19 +14,19 @@ export default class NavBar extends React.Component {
     cartItems: [
       {
         id: 1,
-        name: "Running shorts",
-        price: 29.99,
+        name: "Sweater",
+        price: 100.00,
         size: "M",
-        color: "Red",
+        color: "Green",
         image: productImage1,
         quantity: 1, // Initialize quantity for each item
       },
       {
         id: 2,
-        name: "Product 2",
-        price: 39.99,
+        name: "Running shorts",
+        price: 50.00,
         size: "L",
-        color: "Blue",
+        color: "black",
         image: productImage2,
         quantity: 1,
       },
