@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace app\Controller;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use App\Model\Order; // Import the Order model
+use app\Model\Order; // Import the Order model
 use PDO;
 
 class GraphQLMutation {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Schema;
+namespace app\Schema;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
@@ -10,7 +10,8 @@ class CategorySchema {
         return new ObjectType([
             'name' => 'Category',
             'fields' => [
-                'name' => ['type' => Type::string()],
+                'id' => Type::nonNull(Type::int()),
+                'name' => Type::nonNull(Type::string()),
             ],
         ]);
     }

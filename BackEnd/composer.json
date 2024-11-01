@@ -3,7 +3,7 @@
     "description": "idk",
     "autoload": {
         "psr-4": {
-            "Vendor\\ComposerJson\\": "src/"
+            "app\\": "app/"
         }
     },
     "require": {

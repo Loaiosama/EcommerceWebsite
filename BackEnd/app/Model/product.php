@@ -1,51 +1,74 @@
 <?php
 
-namespace App\Model;
+namespace app\Model;
+
+use PDO;
 
 abstract class Product {
-    protected $id;
-    protected $name;
-    protected $inStock;
-    protected $description;
-    protected $category;
-    protected $brand;
-    protected $attributes;
+    protected string $id;
+    protected string $name;
+    protected bool $inStock;
+    protected string $description;
+    protected string $category;
+    protected string $brand;
+    protected PDO $pdo;
 
-    public function __construct($id, $name, $inStock, $description, $category, $brand, $attributes = []) {
+
+    public function __construct($pdo, $id, $name, $inStock, $description, $category, $brand) {
+        $this->pdo = $pdo;
         $this->id = $id;
         $this->name = $name;
-        $this->inStock = $inStock;
+        $this->inStock = (bool)$inStock;
         $this->description = $description;
         $this->category = $category;
         $this->brand = $brand;
-        $this->attributes = $attributes;
     }
 
     abstract public function getDetails();
-}
 
-class TechProduct extends Product {
-    public function getDetails() {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'inStock' => $this->inStock,
-            'category' => $this->category,
-            'brand' => $this->brand,
-            'attributes' => $this->attributes
-        ];
+    public function getGalleryImages() {
+        $stmt = $this->pdo->prepare("SELECT image_url FROM gallery WHERE product_id = :product_id");
+        $stmt->execute(['product_id' => $this->id]);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 }
 
-class ClothingProduct extends Product {
+class TechProduct extends Product {
+    public function __construct($pdo, $id, $name, $inStock, $description, $category, $brand) {
+        parent::__construct($pdo, $id, $name, $inStock, $description, $category, $brand);
+    }
+    
     public function getDetails() {
-        return [
+        $details = [
             'id' => $this->id,
             'name' => $this->name,
             'inStock' => $this->inStock,
+            'description' => $this->description,
             'category' => $this->category,
             'brand' => $this->brand,
-            'attributes' => $this->attributes
+            'gallery' => $this->getGalleryImages()
         ];
+        return $details;
+    }
+    
+}
+
+class ClothingProduct extends Product {
+    public function __construct($pdo, $id, $name, $inStock, $description, $category, $brand) {
+        parent::__construct($pdo, $id, $name, $inStock, $description, $category, $brand);
+
+    }
+
+    public function getDetails() {
+        $details = [
+            'id' => $this->id,
+            'name' => $this->name,
+            'inStock' => $this->inStock,
+            'description' => $this->description,
+            'category' => $this->category,
+            'brand' => $this->brand,
+            'gallery' => $this->getGalleryImages()
+        ];
+        return $details;
     }
 }

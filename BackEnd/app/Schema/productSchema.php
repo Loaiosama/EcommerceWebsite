@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Schema;
+namespace app\Schema;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use App\Model\Product;
 
 class ProductSchema {
     public static function getProductSchema() {
@@ -17,7 +16,12 @@ class ProductSchema {
                 'description' => ['type' => Type::string()],
                 'category' => ['type' => Type::string()],
                 'brand' => ['type' => Type::string()],
-                'attributes' => ['type' => Type::listOf(Type::string())],
+                'gallery' => [
+                    'type' => Type::listOf(Type::string()),
+                    'resolve' => function ($product) {
+                        return $product['gallery'];
+                    }
+                ],
             ],
         ]);
     }
