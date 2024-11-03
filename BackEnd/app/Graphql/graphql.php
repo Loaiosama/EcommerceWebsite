@@ -1,5 +1,9 @@
 <?php
 ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+header("Access-Control-Allow-Origin: http://localhost:3000"); // Allow requests from your frontend origin
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS"); // Specify allowed methods
+header("Access-Control-Allow-Headers: Content-Type"); // Specify allowed headers
+header("Access-Control-Allow-Origin: *");
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 

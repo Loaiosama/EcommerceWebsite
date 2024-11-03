@@ -17,7 +17,6 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
     // Set PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully"; // You can log this instead of echoing in production
 } catch (PDOException $e) {
     // Log the error instead of exposing it in production
     error_log("Database connection failed: " . $e->getMessage());

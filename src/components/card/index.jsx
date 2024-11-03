@@ -28,7 +28,7 @@ export default class Card extends React.Component {
 
                 <div className="text-container">
                     <p className="item-name">{this.props.name}</p>
-                    <p className="item-price">${this.props.price.toFixed(2)}</p>
+                    <p className="item-price">${this.props.price}</p>
                 </div>
             </div>
         );

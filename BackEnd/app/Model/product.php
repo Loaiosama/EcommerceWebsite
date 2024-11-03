@@ -11,6 +11,7 @@ abstract class Product {
     protected string $description;
     protected string $category;
     protected string $brand;
+    protected float $price;
     protected PDO $pdo;
 
 
@@ -31,6 +32,12 @@ abstract class Product {
         $stmt->execute(['product_id' => $this->id]);
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
+
+    public function getPrice(){
+        $stmt = $this->pdo->prepare("SELECT amount FROM price WHERE product_id = :product_id");
+        $stmt->execute(['product_id' => $this->id]);
+        return $stmt->fetchColumn();
+    }
 }
 
 class TechProduct extends Product {
@@ -46,7 +53,8 @@ class TechProduct extends Product {
             'description' => $this->description,
             'category' => $this->category,
             'brand' => $this->brand,
-            'gallery' => $this->getGalleryImages()
+            'gallery' => $this->getGalleryImages(),
+            'price' => $this->getPrice(),
         ];
         return $details;
     }
@@ -67,7 +75,8 @@ class ClothingProduct extends Product {
             'description' => $this->description,
             'category' => $this->category,
             'brand' => $this->brand,
-            'gallery' => $this->getGalleryImages()
+            'gallery' => $this->getGalleryImages(),
+            'price' => $this->getPrice(),
         ];
         return $details;
     }

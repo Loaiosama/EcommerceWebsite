@@ -68,7 +68,6 @@ class GraphQLQuery {
                                 // var_dump($pdo, $productData); 
                                 $product = new $productClass($pdo, ...array_values($productData));
                                 // $product = new TechProduct($pdo, $productData['id'], $productData['name'], $productData['in_stock'], $productData['description'], $productData['category'], $productData['brand']);
-                                echo "After class";
                                 // var_dump($product);
                                 // Replace the original productData with the complete details
                                 $productData = $product->getDetails();

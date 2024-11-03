@@ -1,51 +1,67 @@
 import React from "react";
 import Card from "../../components/card";
-import RainCoat from "../../assets/Rain coat.png"
-import RunningShoes from "../../assets/Running shoes.jpg"
-import RunningShorts from "../../assets/Running shorts.webp"
-import sweater from "../../assets/sweater1.png"
-
 import "./index.css";
 
-const womenData = [
-  {
-    id: 1,
-    image: sweater,
-    name: "Sweater",
-    price: 50.0,
-    inStock: true,
-  },
-  {
-    id: 2,
-    image: RunningShorts,
-    name: "Running shorts",
-    price: 50.0,
-    inStock: false,
-  },
-  {
-    id: 3,
-    image: RainCoat,
-    name: "Rain coat",
-    price: 50.0,
-    inStock: false,
-  },
-  {
-    id: 4,
-    image: RunningShoes,
-    name: "Running Shoes",
-    price: 50.0,
-    inStock: true,
-  },
-];
+export default class Women extends React.Component {
+  state = {
+    womenData: [],
+  };
 
-export default class Men extends React.Component {
+  componentDidMount() {
+    const query = `
+      query GetClothingProducts($category: String!) {
+        products(category: $category) {
+          id
+          name
+          inStock
+          gallery
+          price
+        }
+      }
+    `;
+
+    const variables = {
+      category: "tech",
+    };
+
+    fetch("http://localhost:8000/app/Graphql/graphql.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("before condition.");
+        if (data.data && data.data.products) {
+          const formattedData = data.data.products.map((product) => ({
+            id: product.id,
+            image: product.gallery[0], // First image from the gallery array
+            name: product.name,
+            price: product.price,
+            inStock: product.inStock,
+          }));
+          console.log("Fetched women products:", formattedData); // Log the fetched data
+
+          this.setState({ womenData: formattedData });
+        }
+      })
+      .catch((error) => console.error("Error fetching women products:", error));
+  }
+
   render() {
+    const { womenData } = this.state;
+
     return (
       <>
-        <h1 className="title">Men</h1>
+        <h1 className="title">Tech</h1>
         <div className="items-container">
-          {womenData.map((item, index) => (
-            <Card key={index} {...item} category = "women" />
+          {womenData.map((item) => (
+            <Card key={item.id} {...item} category="women" />
           ))}
         </div>
       </>

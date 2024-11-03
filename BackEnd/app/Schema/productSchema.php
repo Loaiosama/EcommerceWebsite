@@ -16,12 +16,8 @@ class ProductSchema {
                 'description' => ['type' => Type::string()],
                 'category' => ['type' => Type::string()],
                 'brand' => ['type' => Type::string()],
-                'gallery' => [
-                    'type' => Type::listOf(Type::string()),
-                    'resolve' => function ($product) {
-                        return $product['gallery'];
-                    }
-                ],
+                'gallery' => ['type' => Type::listOf(Type::string())],
+                'price' => ['type' => Type::float()]
             ],
         ]);
     }
