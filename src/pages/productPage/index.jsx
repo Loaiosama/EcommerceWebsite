@@ -1,4 +1,3 @@
-// ProductPage.jsx
 import React, { Component } from 'react';
 import './index.css';
 import Product from "../../components/product";
@@ -66,9 +65,9 @@ class ProductPage extends Component {
 
   canAddToCart = () => {
     const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
-  
+
     if (!productData) return false;
-  
+
     const sizeOptions = productData.category === "clothes"
       ? productData.attributes.find(attr => attr.name === "Size")?.items || []
       : [];
@@ -76,7 +75,7 @@ class ProductPage extends Component {
     const capacityOptions = productData.category === "tech"
       ? productData.attributes.find(attr => attr.name === "Capacity")?.items || []
       : [];
-  
+
     if (productData.category === "clothes") {
       return sizeOptions.length === 0 || sizeChosen !== null;
     }
@@ -89,13 +88,42 @@ class ProductPage extends Component {
       else if (capacityOptions.length > 0) {
         return capacityChosen !== null;
       }
-      else if(capacityOptions.length === 0 && colorOptions.length ===0){
+      else if (capacityOptions.length === 0 && colorOptions.length === 0) {
         return true;
       }
     }
     return false;
   };
-  
+
+  handleAddToCart = () => {
+    const { addToCart } = this.props; // Get addToCart from props
+    const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
+    const image = productData.gallery?.[0];
+    const sizeOptions = productData.category === "clothes"
+      ? productData.attributes.find(attr => attr.name === "Size")?.items || []
+      : [];
+    const colorOptions = productData.attributes.find(attr => attr.name === "Color")?.items || [];
+    const capacityOptions = productData.category === "tech"
+      ? productData.attributes.find(attr => attr.name === "Capacity")?.items || []
+      : [];
+
+    // Create the product object with selected attributes
+    const product = {
+      id: productData.id,
+      name: productData.name,
+      price: productData.price,
+      sizeOptions: sizeOptions,
+      colorOptions: colorOptions,
+      capacityOptions: capacityOptions,
+      size: sizeChosen,
+      color: colorChosen,
+      capacity: capacityChosen,
+      image: image
+    };
+
+    // Call the addToCart function passed from parent (App.jsx)
+    addToCart(product);
+  };
 
   render() {
     const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
@@ -177,7 +205,6 @@ class ProductPage extends Component {
             <p className="price-value">${productData.price.toFixed(2)}</p>
           </div>
 
-
           <button
             className={this.canAddToCart() ? "addToCart" : "addToCart disabled"}
             onClick={this.handleAddToCart}
@@ -185,7 +212,6 @@ class ProductPage extends Component {
           >
             ADD TO CART
           </button>
-          
 
           <div className="description">
             {parse(productData.description)}
