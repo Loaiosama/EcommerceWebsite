@@ -17,7 +17,9 @@ class ProductSchema {
                 'category' => ['type' => Type::string()],
                 'brand' => ['type' => Type::string()],
                 'gallery' => ['type' => Type::listOf(Type::string())],
-                'price' => ['type' => Type::float()]
+                'price' => ['type' => Type::float()],
+                'attributes' => ['type' => Type::listOf(AttributeSetSchema::getAttributeSetSchema())],
+
             ],
         ]);
     }

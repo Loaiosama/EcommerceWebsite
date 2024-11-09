@@ -16,29 +16,36 @@ export default class NavBar extends React.Component {
         id: 1,
         name: "Sweater",
         price: 100.00,
-        size: "M",
-        color: "Green",
+        availableSizes: ["S", "M", "L", "XL"], // Array of available sizes
+        chosenSize: "M", // Chosen size from the available ones
+        availableColors: ["Green", "Blue", "Red"], // Array of available colors
+        chosenColor: "Green", // Chosen color from the available ones
         image: productImage1,
         quantity: 1, // Initialize quantity for each item
       },
       {
         id: 2,
-        name: "Running shorts",
+        name: "Running Shorts",
         price: 50.00,
-        size: "L",
-        color: "black",
+        availableSizes: ["S", "M", "L", "XL"],
+        chosenSize: "L",
+        availableColors: ["Black", "Gray", "Navy"],
+        chosenColor: "Black",
         image: productImage2,
         quantity: 1,
       },
       {
         id: 3,
-        name: "Product 3",
+        name: "Jupiter Hoodie",
         price: 19.99,
-        size: "S",
-        color: "Green",
+        availableSizes: ["XS", "S", "M", "L"],
+        chosenSize: "S",
+        availableColors: ["Green", "Yellow", "Black"],
+        chosenColor: "Green",
         image: productImage3,
         quantity: 1,
       },
+  
     ],
   };
 
@@ -93,19 +100,19 @@ export default class NavBar extends React.Component {
               className={this.state.activeTab === "WOMEN" ? "active" : ""}
               onClick={() => this.handleTabClick("WOMEN")}
             >
-              <Link to="/women">WOMEN</Link>
+              <Link to="/women">CLOTHES</Link>
             </h3>
             <h3
               className={this.state.activeTab === "MEN" ? "active" : ""}
               onClick={() => this.handleTabClick("MEN")}
             >
-              <Link to="/men">MEN</Link>
+              <Link to="/men">TECH</Link>
             </h3>
             <h3
               className={this.state.activeTab === "KIDS" ? "active" : ""}
               onClick={() => this.handleTabClick("KIDS")}
             >
-              <Link to="/kids">KIDS</Link>
+              <Link to="/kids">ALL</Link>
             </h3>
           </div>
 
@@ -135,40 +142,57 @@ export default class NavBar extends React.Component {
                     <div className="cart-item-details">
                       <h3 className="product-name-cart">{item.name}</h3>
                       <p className="cart-item-price">${item.price}</p>
-                      <div className='size-cart'>
+
+                      <div className="size-cart">
                         <p>SIZE:</p>
-                        <span>{item.size}</span>
+                        {item.availableSizes.map((size) => (
+                          <span
+                            key={size}
+                            className={`item-size-cart ${size === item.chosenSize ? 'selected' : ''}`}
+                          >
+                            {size}
+                          </span>
+                        ))}
                       </div>
-                      <div className='color-cart'>
+
+                      <div className="color-cart">
                         <p>COLOR:</p>
-                        <span style={{ backgroundColor: item.color.toLowerCase() }} className="color-swatch-cart"></span>
+                        <div className="color-swatches">
+                          {item.availableColors.map((color) => (
+                            <span
+                              key={color}
+                              style={{ backgroundColor: color.toLowerCase() }}
+                              className={`color-swatch-cart ${color === item.chosenColor ? "selected" : ""}`}
+                            ></span>
+                          ))}
+                        </div>
                       </div>
+
+
                     </div>
+
                     <div className="cart-image-container">
                       <div className="quantity-control">
                         <button
-                          className="arrow-button"
+                          className="arrow-button-top"
                           onClick={() => this.incrementQuantity(item.id)}
                         >
                           +
                         </button>
                         <span>{item.quantity}</span>
                         <button
-                          className="arrow-button"
+                          className="arrow-button-bot"
                           onClick={() => this.decrementQuantity(item.id)}
                         >
                           -
                         </button>
                       </div>
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="cart-item-image"
-                      />
+                      <img src={item.image} alt={item.name} className="cart-item-image" />
                     </div>
                   </li>
                 ))}
               </ul>
+
               <button onClick={this.toggleCartVisibility}>Close</button>
             </div>
           </div>

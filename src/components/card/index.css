@@ -23,7 +23,7 @@
 img {
     width: 100%; 
     height: 100%; /* Allow image to scale while maintaining aspect ratio */
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     margin: auto;
 }

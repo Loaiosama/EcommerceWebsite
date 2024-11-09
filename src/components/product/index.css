@@ -12,28 +12,33 @@
     display: flex;
     align-items: center; /* Center the image vertically */
     margin-left: 50px;
-    width: 575px; /* Make the main image responsive */
-    height: 100%    ; /* Set a max height for the main image */
+    width: 575px;
+    height: 100%; 
 }
 
 .main-image {
     width: 100%; /* Make the main image responsive */
     height: 100%; /* Set a max height for the main image */
+    object-fit: contain;
 }
 
 .thumbnail-container {
     display: flex; /* Use flexbox for the thumbnails */
     flex-direction: column; /* Stack thumbnails vertically */
+    align-items: flex-start;
+
 }
 
 .thumbnail {
     width: 79px; /* Set width for thumbnails */
     height: 80px; /* Set height for thumbnails */
-    object-fit: cover; /* Maintain aspect ratio */
-    margin-bottom: 20px; /* Space between thumbnails */
+    object-fit: contain; /* Maintain aspect ratio */
     cursor: pointer; /* Indicate that thumbnails are clickable */
     transition: box-shadow 0.3s; /* Smooth transition for hover effect */
 } 
+.thumbnail + .thumbnail {
+    margin-top: 20px;
+}
 
 .thumbnail.selected {
     box-shadow: 0 0 5px 2px grey; /* Highlight the selected thumbnail without changing its size */

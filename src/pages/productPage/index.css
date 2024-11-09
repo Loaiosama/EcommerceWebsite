@@ -75,7 +75,6 @@
     font-weight: bold;
     font-size:medium;
     border: none;
-    margin-bottom: 30px;
     cursor: pointer;
     transition: box-shadow 0.3s;
 
@@ -83,6 +82,12 @@
 
 .addToCart:hover {
     box-shadow: 0 0 4px 2px green; /* Slight highlight on hover */
+}
+
+.addToCart.disabled {
+    background-color: #a3d4b0; /* Lighter green */
+    cursor: default; /* No pointer */
+    box-shadow: none; /* No shadow effect */
 }
 
 .description{

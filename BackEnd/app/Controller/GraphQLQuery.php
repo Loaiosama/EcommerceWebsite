@@ -17,12 +17,13 @@ class GraphQLQuery {
             'name' => 'Query',
             'fields' => [
                 // Query for single product by ID
-                'xc' => [
+                'product' => [
                     'type' => ProductSchema::getProductSchema(),
                     'args' => [
-                        'id' => Type::string(),
+                        'id' => Type::nonNull(Type::string()),
                     ],
-                    'resolve' => function($root, $args) use($pdo) {
+                    'resolve' => function($root, $args) use ($pdo) {
+                        // Fetch single product by ID
                         $stmt = $pdo->prepare("SELECT * FROM Product WHERE id = :id");
                         $stmt->execute(['id' => $args['id']]);
                         $productData = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -31,10 +32,15 @@ class GraphQLQuery {
                             throw new \Exception("Product not found");
                         }
 
-                        // Determine Product type
-                        $productClass = ($productData['category'] === 'tech') ? TechProduct::class : ClothingProduct::class;
+                        // Determine the product class type
+                        $productClass = $productData['category'] === 'tech' ? TechProduct::class : ClothingProduct::class;
                         $product = new $productClass($pdo, ...array_values($productData));
-                        return $product->getDetails();
+                        $productDetails = $product->getDetails();
+
+                        // Add attributes to product details
+                        $productDetails['attributes'] = \app\Model\AttributeSet::getAttributesByProductId($pdo, $productData['id']);
+
+                        return $productDetails;
                     }
                 ],
                 // Query for products by category
@@ -45,44 +51,35 @@ class GraphQLQuery {
                     ],
                     'resolve' => function($root, $args) use($pdo) {
                         try {
-                            // echo "From resolve"; 
-                            // var_dump($pdo);
-                            // var_dump($args);
-                            if (!isset($args['category'])) {
-                                var_dump($args['category']); 
+                            // Prepare SQL query based on whether category is provided
+                            if (!empty($args['category'])) {
+                                $stmt = $pdo->prepare("SELECT * FROM product WHERE category = :category");
+                                $stmt->execute(['category' => $args['category']]);
+                            } else {
+                                $stmt = $pdo->query("SELECT * FROM product");
                             }
-                            $stmt = $pdo->prepare("SELECT * FROM product WHERE category = :category ");
-                            $stmt->execute(['category' => $args['category']]);
-                            
+                
                             $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                            // var_dump($products); 
-                    
+                
                             if (!$products) {
-                                throw new \Exception("No products found for the category: " . $args['category']);
+                                throw new \Exception("No products found" . (isset($args['category']) ? " for the category: " . $args['category'] : ""));
                             }
-                    
+                
                             foreach ($products as &$productData) {
                                 $productClass = ($productData['category'] === 'tech') ? TechProduct::class : ClothingProduct::class;
-                                // echo "Selected class for product: " . $productClass . "\n";
-                                // var_dump($pdo, $productData); 
                                 $product = new $productClass($pdo, ...array_values($productData));
-                                // $product = new TechProduct($pdo, $productData['id'], $productData['name'], $productData['in_stock'], $productData['description'], $productData['category'], $productData['brand']);
-                                // var_dump($product);
-                                // Replace the original productData with the complete details
                                 $productData = $product->getDetails();
                             }
-                            
-                            
+                
                             unset($productData);
-
-                    
+                
                             return $products;
                         } catch (\Exception $e) {
                             error_log("Error in products query: " . $e->getMessage());
                             return null;
                         }
                     }
+                    
                 ]
             ]
         ]);

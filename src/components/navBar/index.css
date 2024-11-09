@@ -96,10 +96,10 @@
   background-color: white; /* Background color */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for depth */
   padding: 20px; /* Inner padding */
-  width: 20%; /* Modal width */
+  width: 27%; /* Modal width */
   max-height: 80%; /* Maximum height for modal */
   overflow-y: auto; /* Enable scrolling if content is too tall */
-  margin-left: 75%;
+  margin-left: 65%;
 }
 
 /* Style for cart items */
@@ -193,6 +193,7 @@
   display: flex;
   align-items: center; /* Center align the image and controls */
   position: relative;
+  height: 100%;
   gap: 10px; /* Add some space between the arrows and the image */
 }
 
@@ -203,9 +204,25 @@
   align-items: center;
 }
 
-.arrow-button {
+.arrow-button-top {
   background-color: transparent;
-  border: none;
+  border: 1px solid black;
+  width: 25px;
+  height: 25px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 18px; /* Adjust arrow size */
+  padding: 2px 4px;
+  margin-bottom: 25px;
+}
+
+.arrow-button-bot {
+  background-color: transparent;
+  border: 1px solid black;
+  width: 25px;
+  height: 25px;
+  box-sizing: border-box;
+  margin-top: 25px;
   cursor: pointer;
   font-size: 18px; /* Adjust arrow size */
   padding: 2px 4px;
@@ -218,33 +235,60 @@
 
 /* Style for the product image */
 .cart-item-image {
-  height: 100px;
-  width: auto;
+  height: 130px;
+  width: 130px;
   display: block;
 }
 
 .size-cart p, .color-cart p {
   font-weight: normal;
-  margin-bottom: 5px;
+  font-size: small;
+  margin-bottom: 10px;
   
 }
+
+.item-size-cart {
+  padding: 2px 5px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: default;
+  transition: background-color 0.3s ease;
+}
+
+.item-size-cart.selected {
+  background-color: #333; /* Inverted background color */
+  color: #f9f9f9; /* Inverted text color */
+  border-color: #333;
+}
+
 
 .size-cart {
   margin-top: 5px;
 }
 
 .color-cart {
-  margin-top: 5px;
+  display: flex;
+  flex-direction: column; /* Stack label and colors vertically */
+  align-items: flex-start; /* Align label and colors to the left */
+}
+
+.color-swatches {
+  display: flex;
+  gap: 6px; /* Space between color options */
 }
 
 .color-swatch-cart {
-  display: inline-block;
-  width: 20px;
+  width: 20px; /* Set the size of each color swatch */
   height: 20px;
-  border: 1px solid #ccc;
-  margin-left: 10px;
-  vertical-align: middle;
+  border: 1px solid gray; /* Default border for all colors */
+  cursor:default;
 }
+
+.color-swatch-cart.selected {
+  border: 2px solid black;
+}
+
 
 .product-name-cart{
   font-weight: 100;
