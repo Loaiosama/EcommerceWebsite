@@ -12,6 +12,7 @@ const PRODUCT_QUERY = gql`
       description
       category
       brand
+      inStock
       gallery
       price
       attributes {
@@ -64,9 +65,9 @@ class ProductPage extends Component {
   };
 
   canAddToCart = () => {
-    const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
-
+    const { productData,  sizeChosen, colorChosen, capacityChosen } = this.state;
     if (!productData) return false;
+    if(!productData.inStock) return false;
 
     const sizeOptions = productData.category === "clothes"
       ? productData.attributes.find(attr => attr.name === "Size")?.items || []

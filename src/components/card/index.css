@@ -8,6 +8,7 @@
     transition: box-shadow 0.3s ease;
     position: relative;
     border-radius: 6px;
+    cursor: pointer;
 }
 
 .card-container:hover {
@@ -47,7 +48,12 @@ img {
 
 .out-of-stock {
     opacity: 0.5; /* Reduce opacity to grey out */
-    pointer-events: none; /* Disable interaction when out of stock */
+    /* pointer-events: none;*/
+}
+
+.card-link {
+    text-decoration: none; /* Remove the underline */
+    color: inherit; /* Inherit the color from the parent element */
 }
 
 .overlay {
@@ -59,7 +65,7 @@ img {
     text-align: center;
     width: auto; /* Ensure the width of the overlay adjusts dynamically */
 }
-
+    
 .cart-icon {
     position: absolute; /* Position relative to the img-container */
     bottom: -20px; /* Align to the bottom of the image */

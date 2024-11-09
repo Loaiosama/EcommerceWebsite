@@ -11,6 +11,12 @@ function ProductPageWrapper(props) {
   const { id } = useParams();
   return <ProductPage {...props} productId={id} />;
 }
+// class ProductPageWrapper extends React.Component {
+//   render() {
+//     const { id } = this.props.match.params;
+//     return <ProductPage {...this.props} productId={id} />;
+//   }
+// }
 
 class App extends React.Component {
   constructor(props) {
@@ -93,6 +99,7 @@ class App extends React.Component {
             element={
               <ProductPageWrapper addToCart={this.addToCart} />
             }
+            // element={<ProductPageWrapper addToCart={this.addToCart} />}
           />
           <Route
             path="/women"

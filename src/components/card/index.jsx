@@ -12,18 +12,19 @@ export default class Card extends React.Component {
             <div className={cardClass}>
                 {this.props.inStock ? (
                     // Wrap the image and cart icon inside the Link
-                    <Link to={`/${this.props.category}/${this.props.id}`}>
+                    <Link to={`/${this.props.category}/${this.props.id}`} className="card-link">
                         <div className="img-container">
                             <img src={this.props.image} alt="Women Clothing" />
                             <img src={cart} className="cart-icon" alt="cart icon" />
                         </div>
                     </Link>
                 ) : (
-                    // If out of stock, display without Link
-                    <div className="img-container">
-                        <img src={this.props.image} alt="Women Clothing" />
-                        <div className="overlay">OUT OF STOCK</div>
-                    </div>
+                    <Link to={`/${this.props.category}/${this.props.id}`} className="card-link">
+                        <div className="img-container">
+                            <img src={this.props.image} alt="Women Clothing" />
+                            <div className="overlay">OUT OF STOCK</div>
+                        </div>
+                    </Link>
                 )}
 
                 <div className="text-container">

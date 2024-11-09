@@ -66,8 +66,8 @@
 
 /* Style for the right section (cart icon) */
 .navbar-right {
-  height: 30px;
-  width: 30px; /* Automatically adjust width to keep aspect ratio */
+  height: 40px;
+  width: 6%; /* Automatically adjust width to keep aspect ratio */
 }
 
 /* Cart icon style */
@@ -75,6 +75,30 @@
   height: 30px;
   width: 30px; /* Automatically adjust width to keep aspect ratio */
   cursor: pointer;
+}
+
+.cart-icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Badge styling */
+.cart-notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px; 
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: -50%;
+  left: 8%;
+  transform: translate(-50%, -50%);
 }
 
 /* Modal styles for the cart */
