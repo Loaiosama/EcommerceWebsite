@@ -5,6 +5,8 @@ import Women from "./pages/women";
 import Men from "./pages/men";
 import Kids from "./pages/kids";
 import ProductPage from "./pages/productPage";
+import MyContext from "./context/context.js";
+
 import "./App.css";
 
 class App extends React.Component {
@@ -76,39 +78,39 @@ class App extends React.Component {
 
   render() {
     return (
-      <>
-        
-      <BrowserRouter>
-        <NavBar
-          cartItems={this.state.cartItems}
-          incQuantity={this.incQuantity}
-          decQuantity={this.decQuantity}
-        />
-        <Switch>
-          <Route
-            path="/:category/:id"
-            render={(props) => (
-              (<ProductPage {...props} addToCart={this.addToCart} />)
-            )}
+      <MyContext.Provider value={{ addToCart: this.addToCart, name:'batata' }}>
+        <BrowserRouter>
+          <NavBar
+            cartItems={this.state.cartItems}
+            incQuantity={this.incQuantity}
+            decQuantity={this.decQuantity}
           />
-          <Route
-            path="/women"
-            render={(props) => <Women {...props} addToCart={this.addToCart} />}
-          />
-          <Route
-            path="/men"
-            render={(props) => <Men {...props} addToCart={this.addToCart} />}
-          />
-          <Route
-            path="/kids"
-            render={(props) => <Kids {...props} addToCart={this.addToCart} />}
-          />
-          <Route path="*">
-            <Redirect to="/women" />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-      </>
+          <Switch>
+            <Route
+              path="/:category/:id"
+              render={(props) => (
+                (<ProductPage {...props} addToCart={this.addToCart} />)
+              )}
+            />
+            <Route
+              path="/women"
+              render={(props) => <Women {...props} addToCart={this.addToCart} />}
+            />
+            <Route
+              path="/men"
+              render={(props) => <Men {...props} addToCart={this.addToCart} />}
+            />
+            <Route
+              path="/kids"
+              render={(props) => <Kids {...props} addToCart={this.addToCart} />}
+            />
+            <Route path="*">
+              <Redirect to="/women" />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </MyContext.Provider>
+
     );
   }
 }

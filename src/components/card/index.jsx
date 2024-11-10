@@ -1,36 +1,98 @@
 import React from 'react';
+import { request, gql } from 'graphql-request';
 import cart from '../../assets/shopping_cart.png';
 import './index.css';
 import { Link } from "react-router-dom";
+import MyContext from "../../context/context";
+
+const PRODUCT_QUERY = gql`
+  query ($id: String!) {
+    product(id: $id) {
+      id
+      name
+      price
+      category
+      gallery
+      attributes {
+        name
+        items {
+          display_value
+          value
+        }
+      }
+    }
+  }
+`;
 
 export default class Card extends React.Component {
+    addItemToCart = ({addToCart}) => {
+        const { id } = this.props;
+
+        request('http://localhost:8000/app/Graphql/graphql.php', PRODUCT_QUERY, { id })
+            .then((data) => {
+                const product = data.product;
+
+                // Get the first value for each attribute if available
+                const size = product.attributes.find(attr => attr.name === "Size")?.items[0]?.value || null;
+                const color = product.attributes.find(attr => attr.name === "Color")?.items[0]?.value || null;
+                const capacity = product.attributes.find(attr => attr.name === "Capacity")?.items[0]?.value || null;
+
+                // Construct the product object for adding to cart
+                const productToAdd = {
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    size,
+                    color,
+                    capacity,
+                    image: product.gallery[0]
+                };
+
+                // Call addToCart with the product data
+                addToCart(productToAdd);
+            })
+            .catch((error) => {
+                console.error("Error fetching product:", error);
+            });
+    };
+
     render() {
         const cardClass = this.props.inStock ? 'card-container' : 'card-container out-of-stock';
-        
-        return (
-            <div className={cardClass}>
-                {this.props.inStock ? (
-                    // Wrap the image and cart icon inside the Link
-                    <Link to={`/${this.props.category}/${this.props.id}`} className="card-link">
-                        <div className="img-container">
-                            <img src={this.props.image} alt="Women Clothing" />
-                            <img src={cart} className="cart-icon" alt="cart icon" />
-                        </div>
-                    </Link>
-                ) : (
-                    <Link to={`/${this.props.category}/${this.props.id}`} className="card-link">
-                        <div className="img-container">
-                            <img src={this.props.image} alt="Women Clothing" />
-                            <div className="overlay">OUT OF STOCK</div>
-                        </div>
-                    </Link>
-                )}
 
-                <div className="text-container">
-                    <p className="item-name">{this.props.name}</p>
-                    <p className="item-price">${this.props.price}</p>
-                </div>
-            </div>
+        return (
+            <MyContext.Consumer>
+                {context => (
+                    <div className={cardClass}>
+                        {this.props.inStock ? (
+                            // Wrap the image in a Link but handle cart icon click separately
+                            <Link to={`/${this.props.category}/${this.props.id}`} className="card-link">
+                                <div className="img-container">
+                                    <img src={this.props.image} alt="Product" />
+                                    <img
+                                        src={cart}
+                                        className="cart-icon"
+                                        alt="cart icon"
+                                        onClick={(e) =>{e.preventDefault(); this.addItemToCart(context)}} // Attach onClick handler here
+                                    />
+                                </div>
+                            </Link>
+                        ) : (
+                            <Link to={`/${this.props.category}/${this.props.id}`} className="card-link">
+                                <div className="img-container">
+                                    <img src={this.props.image} alt="Product" />
+                                    <div className="overlay">OUT OF STOCK</div>
+                                </div>
+                            </Link>
+                        )}
+
+                        <div className="text-container">
+                            <p className="item-name">{this.props.name}</p>
+                            <p className="item-price">${this.props.price}</p>
+                        </div>
+                    </div>
+                )}
+            </MyContext.Consumer>
+
         );
     }
 }
