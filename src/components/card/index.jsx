@@ -1,5 +1,4 @@
 import React from 'react';
-import jupiter from '../../assets/jupiter.png';
 import cart from '../../assets/shopping_cart.png';
 import './index.css';
 import { Link } from "react-router-dom";

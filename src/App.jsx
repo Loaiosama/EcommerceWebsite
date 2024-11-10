@@ -1,22 +1,11 @@
 import React from "react";
-import { Route, Routes, Navigate, useParams } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import NavBar from "./components/navBar";
 import Women from "./pages/women";
 import Men from "./pages/men";
 import Kids from "./pages/kids";
 import ProductPage from "./pages/productPage";
 import "./App.css";
-
-function ProductPageWrapper(props) {
-  const { id } = useParams();
-  return <ProductPage {...props} productId={id} />;
-}
-// class ProductPageWrapper extends React.Component {
-//   render() {
-//     const { id } = this.props.match.params;
-//     return <ProductPage {...this.props} productId={id} />;
-//   }
-// }
 
 class App extends React.Component {
   constructor(props) {
@@ -88,45 +77,37 @@ class App extends React.Component {
   render() {
     return (
       <>
+        
+      <BrowserRouter>
         <NavBar
           cartItems={this.state.cartItems}
           incQuantity={this.incQuantity}
           decQuantity={this.decQuantity}
         />
-        <Routes>
+        <Switch>
           <Route
             path="/:category/:id"
-            element={
-              <ProductPageWrapper addToCart={this.addToCart} />
-            }
-            // element={<ProductPageWrapper addToCart={this.addToCart} />}
+            render={(props) => (
+              (<ProductPage {...props} addToCart={this.addToCart} />)
+            )}
           />
           <Route
             path="/women"
-            element={
-              <Women
-                addToCart={this.addToCart}
-              />
-            }
+            render={(props) => <Women {...props} addToCart={this.addToCart} />}
           />
           <Route
             path="/men"
-            element={
-              <Men
-                addToCart={this.addToCart}
-              />
-            }
+            render={(props) => <Men {...props} addToCart={this.addToCart} />}
           />
           <Route
             path="/kids"
-            element={
-              <Kids
-                addToCart={this.addToCart}
-              />
-            }
+            render={(props) => <Kids {...props} addToCart={this.addToCart} />}
           />
-          <Route path="*" element={<Navigate to="/women" />} />
-        </Routes>
+          <Route path="*">
+            <Redirect to="/women" />
+          </Route>
+        </Switch>
+      </BrowserRouter>
       </>
     );
   }

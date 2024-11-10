@@ -27,7 +27,7 @@ export default class NavBar extends React.Component {
     return this.props.cartItems.reduce((total, item) => total + item.quantity, 0);
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const totalItems = this.getTotalItems();
 
     // Check if totalItems increased and if cart is not already visible
@@ -47,24 +47,32 @@ export default class NavBar extends React.Component {
       <>
         <nav className="navbar">
           <div className="navbar-left">
-            <h3
-              className={this.state.activeTab === "WOMEN" ? "active" : ""}
-              onClick={() => this.handleTabClick("WOMEN")}
-            >
-              <Link to="/women">CLOTHES</Link>
-            </h3>
-            <h3
-              className={this.state.activeTab === "MEN" ? "active" : ""}
-              onClick={() => this.handleTabClick("MEN")}
-            >
-              <Link to="/men">TECH</Link>
-            </h3>
-            <h3
-              className={this.state.activeTab === "KIDS" ? "active" : ""}
-              onClick={() => this.handleTabClick("KIDS")}
-            >
-              <Link to="/kids">ALL</Link>
-            </h3>
+
+            <Link to="/women">
+              <h3
+                className={this.state.activeTab === "WOMEN" ? "active" : ""}
+                onClick={() => this.handleTabClick("WOMEN")}
+              >
+                CLOTHES
+              </h3>
+            </Link>
+
+            <Link to="/men">
+              <h3
+                className={this.state.activeTab === "MEN" ? "active" : ""}
+                onClick={() => this.handleTabClick("MEN")}
+              >
+                TECH
+              </h3>
+            </Link>
+            <Link to="/kids">
+              <h3
+                className={this.state.activeTab === "KIDS" ? "active" : ""}
+                onClick={() => this.handleTabClick("KIDS")}
+              >
+                ALL
+              </h3>
+            </Link>
           </div>
 
           <div className="navbar-logo">

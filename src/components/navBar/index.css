@@ -24,7 +24,7 @@
   position: relative; /* Needed for the hover effect */
 }
 
-.navbar-left h3 a {
+.navbar-left a {
   text-decoration: none;
   color: inherit;
 }

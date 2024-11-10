@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import  { Component } from 'react';
 import './index.css';
 import Product from "../../components/product";
 import { request, gql } from 'graphql-request';
@@ -38,7 +38,7 @@ class ProductPage extends Component {
   }
 
   componentDidMount() {
-    const { productId } = this.props;
+    const productId  = this.props.match?.params?.id;
 
     request('http://localhost:8000/app/Graphql/graphql.php', PRODUCT_QUERY, { id: productId })
       .then((data) => {
