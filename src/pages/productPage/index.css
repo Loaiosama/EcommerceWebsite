@@ -3,8 +3,8 @@
 .product-container {
     display: flex;
     justify-content: flex-start;
-    gap: 100px; /* Make the gap flexible */
-    flex-wrap: wrap; /* Allow elements to wrap on smaller screens */
+    gap: 100px;
+    flex-wrap: wrap; 
     margin-top: 4%;
 }
 
@@ -16,13 +16,13 @@
 }
 
 .size p, .color p, .price-label {
-    font-family: 'Roboto Condensed', sans-serif; /* Roboto Condensed for the labels */
+    font-family: 'Roboto Condensed', sans-serif; 
     margin-bottom: 5px;
     font-weight: bold;
 }
 
 .price-value {
-    font-family: 'Raleway', sans-serif; /* Raleway for the actual price */
+    font-family: 'Raleway', sans-serif; 
     margin-top: 5px;
     font-size: 20px;
     font-weight: 700;
@@ -81,13 +81,13 @@
 }
 
 .addToCart:hover {
-    box-shadow: 0 0 4px 2px green; /* Slight highlight on hover */
+    box-shadow: 0 0 4px 2px green; 
 }
 
 .addToCart.disabled {
-    background-color: #a3d4b0; /* Lighter green */
-    cursor: default; /* No pointer */
-    box-shadow: none; /* No shadow effect */
+    background-color: #a3d4b0;
+    cursor: default; 
+    box-shadow: none;
 }
 
 .description{

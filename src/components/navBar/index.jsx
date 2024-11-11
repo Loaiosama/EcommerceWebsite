@@ -2,16 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./index.css";
 import MyContext from "../../context/context";
-import logo from "../../assets/logo.png"; // Example logo image
-import cart from "../../assets/shopping-cart.png"; // Cart icon
+import logo from "../../assets/logo.png"; 
+import cart from "../../assets/shopping-cart.png"; 
 
 export default class NavBar extends React.Component {
   state = {
-    activeTab: "WOMEN", // Set the default active tab
-    cartVisible: false, // Manage cart visibility
+    activeTab: "WOMEN", 
+    cartVisible: false, 
   };
 
-  previousTotalItems = 0; // To keep track of previous total items count
+  previousTotalItems = 0; 
 
   handleTabClick = (tab) => {
     this.setState({ activeTab: tab });
@@ -28,27 +28,23 @@ export default class NavBar extends React.Component {
   };
 
   calculateTotalPrice() {
-    const { cartItems } = this.props; // Assuming cartItems is passed as a prop
+    const { cartItems } = this.props; 
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
   componentDidUpdate() {
     const totalItems = this.getTotalItems();
 
-    // Check if totalItems increased and if cart is not already visible
     if (totalItems > this.previousTotalItems && !this.state.cartVisible) {
       this.setState({ cartVisible: true });
     }
 
-    // Update previousTotalItems after comparison
     this.previousTotalItems = totalItems;
   }
 
-  // Function to send GraphQL mutation using fetch
   placeOrder = ({clearCart}) => {
     const { cartItems } = this.props;
 
-    // Iterate over cartItems and execute the mutation for each item
     cartItems.forEach((item) => {
       const mutation = `
         mutation {
@@ -64,8 +60,7 @@ export default class NavBar extends React.Component {
         }
       `;
 
-      // Send the GraphQL request using fetch
-      fetch('http://localhost:8000/app/Graphql/graphql.php', {  // Replace with your actual GraphQL endpoint
+      fetch('http://localhost:8000/app/Graphql/graphql.php', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +75,6 @@ export default class NavBar extends React.Component {
             console.error("GraphQL Error:", data.errors);
           } else {
             console.log("Order placed successfully", data);
-            // After placing the order, clear the cart and close it
             this.clearCartAndClose(clearCart);
           }
         })
@@ -90,16 +84,15 @@ export default class NavBar extends React.Component {
     });
   };
 
-  // Function to clear the cart and close the modal
   clearCartAndClose = (clearCart) => {
-    clearCart();  // Assuming clearCart is passed as a prop to clear cart in the parent component
+    clearCart();  
     this.setState({ cartVisible: false });
   };
 
   render() {
     const { cartItems, incQuantity, decQuantity } = this.props;
-    const totalItems = this.getTotalItems(); // Get total items count
-    const totalPrice = this.calculateTotalPrice(); // Get the total price
+    const totalItems = this.getTotalItems();
+    const totalPrice = this.calculateTotalPrice(); 
 
     return (
       <MyContext.Consumer>
@@ -154,7 +147,7 @@ export default class NavBar extends React.Component {
               <div className="modal" onClick={this.toggleCartVisibility}>
                 <div className="cart-window" onClick={(e) => e.stopPropagation()}>
                   <h4>
-                    My Bag. {totalItems >= 0 && `${totalItems} items`} {/* Display total items */}
+                    My Bag. {totalItems >= 0 && `${totalItems} items`} 
                   </h4>
                   <ul className="cart-items">
                     {cartItems.map((item) => (
@@ -189,14 +182,14 @@ export default class NavBar extends React.Component {
                           <div className="quantity-control">
                             <button
                               className="arrow-button-top"
-                              onClick={() => incQuantity(item.id)} // Increment quantity
+                              onClick={() => incQuantity(item.id)} 
                             >
                               +
                             </button>
                             <span>{item.quantity}</span>
                             <button
                               className="arrow-button-bot"
-                              onClick={() => decQuantity(item.id)} // Decrement quantity
+                              onClick={() => decQuantity(item.id)} 
                             >
                               -
                             </button>
@@ -211,7 +204,7 @@ export default class NavBar extends React.Component {
                     <span className="total-label">Total:</span>
                     <span className="total-price">${totalPrice.toFixed(2)}</span>
                   </div>
-                  <button className="place-order-btn" onClick={() => this.placeOrder(context)}>PLACE ORDER</button> {/* Place Order button */}
+                  <button className="place-order-btn" onClick={() => this.placeOrder(context)}>PLACE ORDER</button> 
                 </div>
               </div>
             )}

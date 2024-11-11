@@ -4,7 +4,7 @@ namespace app\Controller;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use app\Model\Order; // Import the Order model
+use app\Model\Order; 
 include_once '../Model/Order.php';
 
 class GraphQLMutation {
@@ -13,7 +13,7 @@ class GraphQLMutation {
             'name' => 'Mutation',
             'fields' => [
                 'addOrder' => [
-                    'type' => Type::string(), // Return order ID
+                    'type' => Type::string(),
                     'args' => [
                         'product_id' => Type::nonNull(Type::string()), 
                         'name' => Type::nonNull(Type::string()),      
@@ -24,7 +24,6 @@ class GraphQLMutation {
                         'quantity' => Type::nonNull(Type::int())
                     ],
                     'resolve' => function($root, $args) use ($pdo) {
-                        // Insert order into DB using the Order model
                         
                         $order = new Order($pdo);
                         $orderId = $order->createOrder(
@@ -36,7 +35,7 @@ class GraphQLMutation {
                             $args['capacity'] ?? null,
                             $args['quantity']
                         );
-                        return (string) $orderId; // Return the order ID
+                        return (string) $orderId;
                     }
                 ]
             ]

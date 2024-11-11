@@ -7,10 +7,10 @@
   }
   
   .title {
-      grid-column: 1 / -1; /* Span across all columns */
-      text-align: left; /* Align text to the left */
-      margin: 0; /* Remove default margin */
-      padding: 50px 0; /* Optional: Space above and below */
+      grid-column: 1 / -1; 
+      text-align: left; 
+      margin: 0; 
+      padding: 50px 0; 
       font-weight: lighter;
   }
   

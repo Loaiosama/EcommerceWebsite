@@ -101,15 +101,7 @@ class ProductPage extends Component {
   handleAddToCart = ({ addToCart }) => {
     const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
     const image = productData.gallery?.[0];
-    // const sizeOptions = productData.category === "clothes"
-    //   ? productData.attributes.find(attr => attr.name === "Size")?.items || []
-    //   : [];
-    // const colorOptions = productData.attributes.find(attr => attr.name === "Color")?.items || [];
-    // const capacityOptions = productData.category === "tech"
-    //   ? productData.attributes.find(attr => attr.name === "Capacity")?.items || []
-    //   : [];
 
-    // Create the product object with selected attributes
     const product = {
       id: productData.id,
       name: productData.name,
@@ -120,7 +112,6 @@ class ProductPage extends Component {
       image: image
     };
 
-    // Call the addToCart function passed from parent (App.jsx)
     addToCart(product);
   };
 
@@ -147,7 +138,6 @@ class ProductPage extends Component {
             <div className="product-info">
               <h2>{productData.name}</h2>
 
-              {/* Render Size options if category is "clothes" */}
               {category === "clothes" && (
                 <div className="size">
                   <p>SIZE:</p>
@@ -165,7 +155,6 @@ class ProductPage extends Component {
                 </div>
               )}
 
-              {/* Render Color options if available */}
               {colorOptions.length > 0 && (
                 <div className="color">
                   <p>COLOR:</p>
@@ -183,7 +172,6 @@ class ProductPage extends Component {
                 </div>
               )}
 
-              {/* Render Capacity options if category is "tech" */}
               {category === "tech" && capacityOptions.length > 0 && (
                 <div className="size">
                   <p>CAPACITY:</p>

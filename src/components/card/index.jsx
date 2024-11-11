@@ -32,12 +32,10 @@ export default class Card extends React.Component {
             .then((data) => {
                 const product = data.product;
 
-                // Get the first value for each attribute if available
                 const size = product.attributes.find(attr => attr.name === "Size")?.items[0]?.value || null;
                 const color = product.attributes.find(attr => attr.name === "Color")?.items[0]?.value || null;
                 const capacity = product.attributes.find(attr => attr.name === "Capacity")?.items[0]?.value || null;
 
-                // Construct the product object for adding to cart
                 const productToAdd = {
                     id: product.id,
                     name: product.name,
@@ -48,7 +46,6 @@ export default class Card extends React.Component {
                     image: product.gallery[0]
                 };
 
-                // Call addToCart with the product data
                 addToCart(productToAdd);
             })
             .catch((error) => {
@@ -64,7 +61,6 @@ export default class Card extends React.Component {
                 {context => (
                     <div className={cardClass}>
                         {this.props.inStock ? (
-                            // Wrap the image in a Link but handle cart icon click separately
                             <Link to={`/${this.props.category}/${this.props.id}`} className="card-link">
                                 <div className="img-container">
                                     <img src={this.props.image} alt="Product" />

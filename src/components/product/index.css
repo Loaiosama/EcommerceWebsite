@@ -1,5 +1,5 @@
 .product-gallery-container {
-    display: flex; /* Use flexbox for horizontal layout */
+    display: flex; 
     /* width:60%; */
     max-width: 90%;
     max-height: 500px;
@@ -7,7 +7,7 @@
 }
 
 .image-preview-container {
-    position: relative; /* For positioning the arrows */
+    position: relative; 
     flex: 1; /* Allow the image preview to take available space */
     display: flex;
     align-items: center; /* Center the image vertically */
@@ -17,62 +17,62 @@
 }
 
 .main-image {
-    width: 100%; /* Make the main image responsive */
-    height: 100%; /* Set a max height for the main image */
+    width: 100%; 
+    height: 100%; 
     object-fit: contain;
 }
 
 .thumbnail-container {
-    display: flex; /* Use flexbox for the thumbnails */
-    flex-direction: column; /* Stack thumbnails vertically */
+    display: flex;
+    flex-direction: column;
     align-items: flex-start;
 
 }
 
 .thumbnail {
-    width: 79px; /* Set width for thumbnails */
-    height: 80px; /* Set height for thumbnails */
-    object-fit: contain; /* Maintain aspect ratio */
-    cursor: pointer; /* Indicate that thumbnails are clickable */
-    transition: box-shadow 0.3s; /* Smooth transition for hover effect */
+    width: 79px; 
+    height: 80px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: box-shadow 0.3s; 
 } 
 .thumbnail + .thumbnail {
     margin-top: 20px;
 }
 
 .thumbnail.selected {
-    box-shadow: 0 0 5px 2px grey; /* Highlight the selected thumbnail without changing its size */
-    border-radius: 5px; /* Optional: keep rounded corners */
+    box-shadow: 0 0 5px 2px grey; 
+    border-radius: 5px; 
 }
 
 .thumbnail:hover {
-    box-shadow: 0 0 5px 2px lightgrey; /* Slight highlight on hover */
+    box-shadow: 0 0 5px 2px lightgrey;
 }
 
 
 .arrow {
-    background: rgba(0, 0, 0, 0.6); /* Slightly lighter black background */
+    background: rgba(0, 0, 0, 0.6); 
     color: white;
-    border: 0px solid rgba(0, 0, 0, 0.4); /* Border with a lighter shade */
-    border-radius: 5px; /* Rounded corners for a smoother look */
-    padding: 5px 10px; /* Padding around the arrow */
-    cursor: pointer; /* Change cursor on hover */
-    font-size: 24px; /* Increase arrow size */
-    transition: background 0.3s; /* Transition for hover effect */
+    border: 0px solid rgba(0, 0, 0, 0.4); 
+    border-radius: 5px;
+    padding: 5px 10px; 
+    cursor: pointer;
+    font-size: 24px; 
+    transition: background 0.3s; 
 }
 
 .arrow:hover {
-    background: rgba(0, 0, 0, 0.8); /* Darken background on hover */
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .left-arrow {
-    position: absolute; /* Position the left arrow */
-    left: 9px; /* Adjust position as needed */
-    z-index: 1; /* Ensure it's above the image */
+    position: absolute;
+    left: 9px;
+    z-index: 1;
 }
 
 .right-arrow {
-    position: absolute; /* Position the right arrow */
-    right: 10px; /* Adjust position as needed */
-    z-index: 1; /* Ensure it's above the image */
+    position: absolute;
+    right: 10px; 
+    z-index: 1;
 }

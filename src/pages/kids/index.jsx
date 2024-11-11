@@ -35,12 +35,12 @@ export default class Women extends React.Component {
         if (data.data && data.data.products) {
           const formattedData = data.data.products.map((product) => ({
             id: product.id,
-            image: product.gallery[0], // First image from the gallery array
+            image: product.gallery[0], 
             name: product.name,
             price: product.price,
             inStock: product.inStock,
           }));
-          console.log("Fetched all products:", formattedData); // Log the fetched data
+          console.log("Fetched all products:", formattedData); 
   
           this.setState({ womenData: formattedData });
         }

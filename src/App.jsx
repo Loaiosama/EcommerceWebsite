@@ -17,11 +17,10 @@ class App extends React.Component {
     };
   }
 
-  // Function to add product to cart
   addToCart = (product) => {
     this.setState((prevState) => {
       const existingProduct = prevState.cartItems.find(
-        (item) => item.id === product.id
+        (item) => item.id === product.id && item.size === product.size && item.color === product.color && item.capacity === product.capacity
       );
 
       if (existingProduct) {
@@ -40,7 +39,6 @@ class App extends React.Component {
     });
   };
 
-  // Function to increment quantity of an item
   incQuantity = (id) => {
     this.setState((prevState) => {
       return {
@@ -53,7 +51,6 @@ class App extends React.Component {
     });
   };
 
-  // Function to decrement quantity of an item
   decQuantity = (id) => {
     this.setState((prevState) => {
       const updatedCart = prevState.cartItems
@@ -62,13 +59,13 @@ class App extends React.Component {
             if (item.quantity > 1) {
               return { ...item, quantity: item.quantity - 1 };
             } else {
-              return null; // Remove item if quantity is 1
+              return null;
             }
           } else {
             return item;
           }
         })
-        .filter((item) => item !== null); // Filter out null items
+        .filter((item) => item !== null); 
 
       return {
         cartItems: updatedCart,
@@ -77,7 +74,7 @@ class App extends React.Component {
   };
 
   clearCart = () => {
-    this.setState({ cartItems: [] }); // Clears the cartItems array
+    this.setState({ cartItems: [] }); 
   };
 
   render() {
