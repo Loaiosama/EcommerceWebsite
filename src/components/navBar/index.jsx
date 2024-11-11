@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./index.css";
+import MyContext from "../../context/context";
 import logo from "../../assets/logo.png"; // Example logo image
 import cart from "../../assets/shopping-cart.png"; // Cart icon
 
@@ -44,7 +45,7 @@ export default class NavBar extends React.Component {
   }
 
   // Function to send GraphQL mutation using fetch
-  placeOrder = () => {
+  placeOrder = ({clearCart}) => {
     const { cartItems } = this.props;
 
     // Iterate over cartItems and execute the mutation for each item
@@ -80,7 +81,7 @@ export default class NavBar extends React.Component {
           } else {
             console.log("Order placed successfully", data);
             // After placing the order, clear the cart and close it
-            this.clearCartAndClose();
+            this.clearCartAndClose(clearCart);
           }
         })
         .catch((error) => {
@@ -90,8 +91,8 @@ export default class NavBar extends React.Component {
   };
 
   // Function to clear the cart and close the modal
-  clearCartAndClose = () => {
-    this.props.clearCart();  // Assuming clearCart is passed as a prop to clear cart in the parent component
+  clearCartAndClose = (clearCart) => {
+    clearCart();  // Assuming clearCart is passed as a prop to clear cart in the parent component
     this.setState({ cartVisible: false });
   };
 
@@ -101,118 +102,122 @@ export default class NavBar extends React.Component {
     const totalPrice = this.calculateTotalPrice(); // Get the total price
 
     return (
-      <>
-        <nav className="navbar">
-          <div className="navbar-left">
-            <Link to="/women">
-              <h3
-                className={this.state.activeTab === "WOMEN" ? "active" : ""}
-                onClick={() => this.handleTabClick("WOMEN")}
-              >
-                CLOTHES
-              </h3>
-            </Link>
+      <MyContext.Consumer>
+        {context => (
+          <>
+            <nav className="navbar">
+              <div className="navbar-left">
+                <Link to="/women">
+                  <h3
+                    className={this.state.activeTab === "WOMEN" ? "active" : ""}
+                    onClick={() => this.handleTabClick("WOMEN")}
+                  >
+                    CLOTHES
+                  </h3>
+                </Link>
 
-            <Link to="/men">
-              <h3
-                className={this.state.activeTab === "MEN" ? "active" : ""}
-                onClick={() => this.handleTabClick("MEN")}
-              >
-                TECH
-              </h3>
-            </Link>
-            <Link to="/kids">
-              <h3
-                className={this.state.activeTab === "KIDS" ? "active" : ""}
-                onClick={() => this.handleTabClick("KIDS")}
-              >
-                ALL
-              </h3>
-            </Link>
-          </div>
-
-          <div className="navbar-logo">
-            <img src={logo} alt="Site Logo" />
-          </div>
-
-          <div className="navbar-right">
-            <div className="cart-icon-container" onClick={this.toggleCartVisibility}>
-              <img src={cart} className="cart-icon-nav" alt="Cart Icon" />
-              {totalItems > 0 && (
-                <div className="cart-notification">
-                  {totalItems}
-                </div>
-              )}
-            </div>
-          </div>
-        </nav>
-
-        {this.state.cartVisible && (
-          <div className="modal" onClick={this.toggleCartVisibility}>
-            <div className="cart-window" onClick={(e) => e.stopPropagation()}>
-              <h4>
-                My Bag. {totalItems >= 0 && `${totalItems} items`} {/* Display total items */}
-              </h4>
-              <ul className="cart-items">
-                {cartItems.map((item) => (
-                  <li key={item.id} className="cart-item">
-                    <div className="cart-item-details">
-                      <h3 className="product-name-cart">{item.name}</h3>
-                      <p className="cart-item-price">${item.price}</p>
-                      {item.size && (
-                        <div className="size-cart">
-                          <p>SIZE:</p>
-                          <span className="item-size-cart selected">{item.size}</span>
-                        </div>
-                      )}
-                      {item.color && (
-                        <div className="color-cart">
-                          <p>COLOR:</p>
-                          <span
-                            className="color-swatch-cart selected"
-                            style={{ backgroundColor: item.color.toLowerCase() }}
-                          ></span>
-                        </div>
-                      )}
-                      {item.capacity && (
-                        <div className="size-cart">
-                          <p>CAPACITY:</p>
-                          <span className="item-size-cart selected">{item.capacity}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="cart-image-container">
-                      <div className="quantity-control">
-                        <button
-                          className="arrow-button-top"
-                          onClick={() => incQuantity(item.id)} // Increment quantity
-                        >
-                          +
-                        </button>
-                        <span>{item.quantity}</span>
-                        <button
-                          className="arrow-button-bot"
-                          onClick={() => decQuantity(item.id)} // Decrement quantity
-                        >
-                          -
-                        </button>
-                      </div>
-                      <img src={item.image} alt={item.name} className="cart-item-image" />
-                    </div>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="cart-total-price">
-                <span className="total-label">Total:</span>
-                <span className="total-price">${totalPrice.toFixed(2)}</span>
+                <Link to="/men">
+                  <h3
+                    className={this.state.activeTab === "MEN" ? "active" : ""}
+                    onClick={() => this.handleTabClick("MEN")}
+                  >
+                    TECH
+                  </h3>
+                </Link>
+                <Link to="/kids">
+                  <h3
+                    className={this.state.activeTab === "KIDS" ? "active" : ""}
+                    onClick={() => this.handleTabClick("KIDS")}
+                  >
+                    ALL
+                  </h3>
+                </Link>
               </div>
-              <button className="place-order-btn" onClick={this.placeOrder}>PLACE ORDER</button> {/* Place Order button */}
-            </div>
-          </div>
-        )}
-      </>
+
+              <div className="navbar-logo">
+                <img src={logo} alt="Site Logo" />
+              </div>
+
+              <div className="navbar-right">
+                <div className="cart-icon-container" onClick={this.toggleCartVisibility}>
+                  <img src={cart} className="cart-icon-nav" alt="Cart Icon" />
+                  {totalItems > 0 && (
+                    <div className="cart-notification">
+                      {totalItems}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </nav>
+
+            {this.state.cartVisible && (
+              <div className="modal" onClick={this.toggleCartVisibility}>
+                <div className="cart-window" onClick={(e) => e.stopPropagation()}>
+                  <h4>
+                    My Bag. {totalItems >= 0 && `${totalItems} items`} {/* Display total items */}
+                  </h4>
+                  <ul className="cart-items">
+                    {cartItems.map((item) => (
+                      <li key={item.id} className="cart-item">
+                        <div className="cart-item-details">
+                          <h3 className="product-name-cart">{item.name}</h3>
+                          <p className="cart-item-price">${item.price}</p>
+                          {item.size && (
+                            <div className="size-cart">
+                              <p>SIZE:</p>
+                              <span className="item-size-cart selected">{item.size}</span>
+                            </div>
+                          )}
+                          {item.color && (
+                            <div className="color-cart">
+                              <p>COLOR:</p>
+                              <span
+                                className="color-swatch-cart selected"
+                                style={{ backgroundColor: item.color.toLowerCase() }}
+                              ></span>
+                            </div>
+                          )}
+                          {item.capacity && (
+                            <div className="size-cart">
+                              <p>CAPACITY:</p>
+                              <span className="item-size-cart selected">{item.capacity}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="cart-image-container">
+                          <div className="quantity-control">
+                            <button
+                              className="arrow-button-top"
+                              onClick={() => incQuantity(item.id)} // Increment quantity
+                            >
+                              +
+                            </button>
+                            <span>{item.quantity}</span>
+                            <button
+                              className="arrow-button-bot"
+                              onClick={() => decQuantity(item.id)} // Decrement quantity
+                            >
+                              -
+                            </button>
+                          </div>
+                          <img src={item.image} alt={item.name} className="cart-item-image" />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="cart-total-price">
+                    <span className="total-label">Total:</span>
+                    <span className="total-price">${totalPrice.toFixed(2)}</span>
+                  </div>
+                  <button className="place-order-btn" onClick={() => this.placeOrder(context)}>PLACE ORDER</button> {/* Place Order button */}
+                </div>
+              </div>
+            )}
+          </>
+        )}</MyContext.Consumer>
+
     );
   }
 }

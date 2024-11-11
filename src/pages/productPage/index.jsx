@@ -1,6 +1,8 @@
-import  { Component } from 'react';
+import { Component } from 'react';
+import { withRouter } from "react-router-dom";
 import './index.css';
 import Product from "../../components/product";
+import MyContext from "../../context/context";
 import { request, gql } from 'graphql-request';
 import parse from 'html-react-parser';
 
@@ -38,7 +40,7 @@ class ProductPage extends Component {
   }
 
   componentDidMount() {
-    const productId  = this.props.match?.params?.id;
+    const productId = this.props.match?.params?.id;
 
     request('http://localhost:8000/app/Graphql/graphql.php', PRODUCT_QUERY, { id: productId })
       .then((data) => {
@@ -65,9 +67,9 @@ class ProductPage extends Component {
   };
 
   canAddToCart = () => {
-    const { productData,  sizeChosen, colorChosen, capacityChosen } = this.state;
+    const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
     if (!productData) return false;
-    if(!productData.inStock) return false;
+    if (!productData.inStock) return false;
 
     const sizeOptions = productData.category === "clothes"
       ? productData.attributes.find(attr => attr.name === "Size")?.items || []
@@ -96,8 +98,7 @@ class ProductPage extends Component {
     return false;
   };
 
-  handleAddToCart = () => {
-    const { addToCart } = this.props; // Get addToCart from props
+  handleAddToCart = ({ addToCart }) => {
     const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
     const image = productData.gallery?.[0];
     // const sizeOptions = productData.category === "clothes"
@@ -138,86 +139,91 @@ class ProductPage extends Component {
       : [];
 
     return (
-      <div className="product-container">
-        <Product gallery={productData.gallery} />
+      <MyContext.Consumer>
+        {context => (
+          <div className="product-container">
+            <Product gallery={productData.gallery} />
 
-        <div className="product-info">
-          <h2>{productData.name}</h2>
+            <div className="product-info">
+              <h2>{productData.name}</h2>
 
-          {/* Render Size options if category is "clothes" */}
-          {category === "clothes" && (
-            <div className="size">
-              <p>SIZE:</p>
-              <div className="size-options">
-                {sizeOptions.map((size, index) => (
-                  <button
-                    key={index}
-                    className={`size-button ${sizeChosen === size.value ? 'selected' : ''}`}
-                    onClick={() => this.changeSize(size.value)}
-                  >
-                    {size.display_value}
-                  </button>
-                ))}
+              {/* Render Size options if category is "clothes" */}
+              {category === "clothes" && (
+                <div className="size">
+                  <p>SIZE:</p>
+                  <div className="size-options">
+                    {sizeOptions.map((size, index) => (
+                      <button
+                        key={index}
+                        className={`size-button ${sizeChosen === size.value ? 'selected' : ''}`}
+                        onClick={() => this.changeSize(size.value)}
+                      >
+                        {size.display_value}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Render Color options if available */}
+              {colorOptions.length > 0 && (
+                <div className="color">
+                  <p>COLOR:</p>
+                  <div className="color-options">
+                    {colorOptions.map((color, index) => (
+                      <button
+                        key={index}
+                        className={`color-button ${colorChosen === color.value ? 'selected' : ''}`}
+                        onClick={() => this.changeColor(color.value)}
+                        style={{ backgroundColor: color.display_value.toLowerCase() }}
+                      >
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Render Capacity options if category is "tech" */}
+              {category === "tech" && capacityOptions.length > 0 && (
+                <div className="size">
+                  <p>CAPACITY:</p>
+                  <div className="size-options">
+                    {capacityOptions.map((capacity, index) => (
+                      <button
+                        key={index}
+                        className={`size-button ${capacityChosen === capacity.value ? 'selected' : ''}`}
+                        onClick={() => this.changeCapacity(capacity.value)}
+                      >
+                        {capacity.display_value}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="price">
+                <p className="price-label">PRICE:</p>
+                <p className="price-value">${productData.price.toFixed(2)}</p>
+              </div>
+
+              <button
+                className={this.canAddToCart() ? "addToCart" : "addToCart disabled"}
+                onClick={() => this.handleAddToCart(context)}
+                disabled={!this.canAddToCart()}
+              >
+                ADD TO CART
+              </button>
+
+              <div className="description">
+                {parse(productData.description)}
               </div>
             </div>
-          )}
-
-          {/* Render Color options if available */}
-          {colorOptions.length > 0 && (
-            <div className="color">
-              <p>COLOR:</p>
-              <div className="color-options">
-                {colorOptions.map((color, index) => (
-                  <button
-                    key={index}
-                    className={`color-button ${colorChosen === color.value ? 'selected' : ''}`}
-                    onClick={() => this.changeColor(color.value)}
-                    style={{ backgroundColor: color.display_value.toLowerCase() }}
-                  >
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Render Capacity options if category is "tech" */}
-          {category === "tech" && capacityOptions.length > 0 && (
-            <div className="size">
-              <p>CAPACITY:</p>
-              <div className="size-options">
-                {capacityOptions.map((capacity, index) => (
-                  <button
-                    key={index}
-                    className={`size-button ${capacityChosen === capacity.value ? 'selected' : ''}`}
-                    onClick={() => this.changeCapacity(capacity.value)}
-                  >
-                    {capacity.display_value}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="price">
-            <p className="price-label">PRICE:</p>
-            <p className="price-value">${productData.price.toFixed(2)}</p>
           </div>
 
-          <button
-            className={this.canAddToCart() ? "addToCart" : "addToCart disabled"}
-            onClick={this.handleAddToCart}
-            disabled={!this.canAddToCart()}
-          >
-            ADD TO CART
-          </button>
+        )}</MyContext.Consumer>
 
-          <div className="description">
-            {parse(productData.description)}
-          </div>
-        </div>
-      </div>
     );
   }
 }
 
-export default ProductPage;
+export default withRouter(ProductPage);

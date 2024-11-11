@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import NavBar from "./components/navBar";
 import Women from "./pages/women";
 import Men from "./pages/men";
@@ -82,38 +82,35 @@ class App extends React.Component {
 
   render() {
     return (
-      <MyContext.Provider value={{ addToCart: this.addToCart, name:'batata' }}>
-        <BrowserRouter>
+      <MyContext.Provider value={{ addToCart: this.addToCart, clearCart: this.clearCart }}>
           <NavBar
             cartItems={this.state.cartItems}
             incQuantity={this.incQuantity}
             decQuantity={this.decQuantity}
-            clearCart={this.clearCart}
           />
           <Switch>
             <Route
               path="/:category/:id"
-              render={(props) => (
-                (<ProductPage {...props} addToCart={this.addToCart} />)
+              render={() => (
+                (<ProductPage />)
               )}
             />
             <Route
               path="/women"
-              render={(props) => <Women {...props} addToCart={this.addToCart} />}
+              render={() => <Women />}
             />
             <Route
               path="/men"
-              render={(props) => <Men {...props} addToCart={this.addToCart} />}
+              render={() => <Men />}
             />
             <Route
               path="/kids"
-              render={(props) => <Kids {...props} addToCart={this.addToCart} />}
+              render={() => <Kids />}
             />
             <Route path="*">
               <Redirect to="/women" />
             </Route>
           </Switch>
-        </BrowserRouter>
       </MyContext.Provider>
 
     );
