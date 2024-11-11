@@ -2,9 +2,9 @@ import React from "react";
 import Card from "../../components/card";
 import "./index.css";
 
-export default class Women extends React.Component {
+export default class All extends React.Component {
   state = {
-    womenData: [],
+    allData: [],
   };
 
   componentDidMount() {
@@ -42,7 +42,7 @@ export default class Women extends React.Component {
           }));
           console.log("Fetched all products:", formattedData); 
   
-          this.setState({ womenData: formattedData });
+          this.setState({ allData: formattedData });
         }
       })
       .catch((error) => console.error("Error fetching products:", error));
@@ -50,14 +50,14 @@ export default class Women extends React.Component {
   
 
   render() {
-    const { womenData } = this.state;
+    const { allData } = this.state;
 
     return (
       <>
         <h1 className="title">All products</h1>
         <div className="items-container">
-          {womenData.map((item) => (
-            <Card key={item.id} {...item} category="women" />
+          {allData.map((item) => (
+            <Card key={item.id} {...item} category="All" />
           ))}
         </div>
       </>

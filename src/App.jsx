@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import NavBar from "./components/navBar";
-import Women from "./pages/women";
-import Men from "./pages/men";
-import Kids from "./pages/kids";
+import Clothes from "./pages/clothes/index.jsx";
+import Tech from "./pages/Tech/index.jsx";
+import All from "./pages/All/index.jsx";
 import ProductPage from "./pages/productPage";
 import MyContext from "./context/context.js";
 
@@ -93,19 +93,19 @@ class App extends React.Component {
               )}
             />
             <Route
-              path="/women"
-              render={() => <Women />}
+              path="/clothes"
+              render={() => <Clothes />}
             />
             <Route
-              path="/men"
-              render={() => <Men />}
+              path="/tech"
+              render={() => <Tech />}
             />
             <Route
-              path="/kids"
-              render={() => <Kids />}
+              path="/all"
+              render={() => <All />}
             />
             <Route path="*">
-              <Redirect to="/women" />
+              <Redirect to="/clothes" />
             </Route>
           </Switch>
       </MyContext.Provider>

@@ -7,7 +7,7 @@ import cart from "../../assets/shopping-cart.png";
 
 export default class NavBar extends React.Component {
   state = {
-    activeTab: "WOMEN", 
+    activeTab: "CLOTHES", 
     cartVisible: false, 
   };
 
@@ -100,27 +100,27 @@ export default class NavBar extends React.Component {
           <>
             <nav className="navbar">
               <div className="navbar-left">
-                <Link to="/women">
+                <Link to="/clothes">
                   <h3
-                    className={this.state.activeTab === "WOMEN" ? "active" : ""}
-                    onClick={() => this.handleTabClick("WOMEN")}
+                    className={this.state.activeTab === "CLOTHES" ? "active" : ""}
+                    onClick={() => this.handleTabClick("CLOTHES")}
                   >
                     CLOTHES
                   </h3>
                 </Link>
 
-                <Link to="/men">
+                <Link to="/tech">
                   <h3
-                    className={this.state.activeTab === "MEN" ? "active" : ""}
-                    onClick={() => this.handleTabClick("MEN")}
+                    className={this.state.activeTab === "TECH" ? "active" : ""}
+                    onClick={() => this.handleTabClick("TECH")}
                   >
                     TECH
                   </h3>
                 </Link>
-                <Link to="/kids">
+                <Link to="/all">
                   <h3
-                    className={this.state.activeTab === "KIDS" ? "active" : ""}
-                    onClick={() => this.handleTabClick("KIDS")}
+                    className={this.state.activeTab === "ALL" ? "active" : ""}
+                    onClick={() => this.handleTabClick("ALL")}
                   >
                     ALL
                   </h3>

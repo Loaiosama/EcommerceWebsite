@@ -2,9 +2,9 @@ import React from "react";
 import Card from "../../components/card";
 import "./index.css";
 
-export default class Women extends React.Component {
+export default class Tech extends React.Component {
   state = {
-    womenData: [],
+    techData: [],
   };
 
   componentDidMount() {
@@ -21,7 +21,7 @@ export default class Women extends React.Component {
     `;
 
     const variables = {
-      category: "clothes",
+      category: "tech",
     };
 
     fetch("http://localhost:8000/app/Graphql/graphql.php", {
@@ -45,23 +45,23 @@ export default class Women extends React.Component {
             price: product.price,
             inStock: product.inStock,
           }));
-          console.log("Fetched women products:", formattedData); 
+          console.log("Fetched tech products:", formattedData); 
 
-          this.setState({ womenData: formattedData });
+          this.setState({ techData: formattedData });
         }
       })
-      .catch((error) => console.error("Error fetching women products:", error));
+      .catch((error) => console.error("Error fetching tech products:", error));
   }
 
   render() {
-    const { womenData } = this.state;
+    const { techData } = this.state;
 
     return (
       <>
-        <h1 className="title">Clothes</h1>
+        <h1 className="title">Tech</h1>
         <div className="items-container">
-          {womenData.map((item) => (
-            <Card key={item.id} {...item} category="women" />
+          {techData.map((item) => (
+            <Card key={item.id} {...item} category="tech" />
           ))}
         </div>
       </>
