@@ -100,22 +100,19 @@ class ProductPage extends Component {
     const { addToCart } = this.props; // Get addToCart from props
     const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
     const image = productData.gallery?.[0];
-    const sizeOptions = productData.category === "clothes"
-      ? productData.attributes.find(attr => attr.name === "Size")?.items || []
-      : [];
-    const colorOptions = productData.attributes.find(attr => attr.name === "Color")?.items || [];
-    const capacityOptions = productData.category === "tech"
-      ? productData.attributes.find(attr => attr.name === "Capacity")?.items || []
-      : [];
+    // const sizeOptions = productData.category === "clothes"
+    //   ? productData.attributes.find(attr => attr.name === "Size")?.items || []
+    //   : [];
+    // const colorOptions = productData.attributes.find(attr => attr.name === "Color")?.items || [];
+    // const capacityOptions = productData.category === "tech"
+    //   ? productData.attributes.find(attr => attr.name === "Capacity")?.items || []
+    //   : [];
 
     // Create the product object with selected attributes
     const product = {
       id: productData.id,
       name: productData.name,
       price: productData.price,
-      sizeOptions: sizeOptions,
-      colorOptions: colorOptions,
-      capacityOptions: capacityOptions,
       size: sizeChosen,
       color: colorChosen,
       capacity: capacityChosen,

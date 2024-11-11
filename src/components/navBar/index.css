@@ -70,6 +70,38 @@
   width: 6%; /* Automatically adjust width to keep aspect ratio */
 }
 
+.cart-total-price {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Ensures that "Total" is on the left and the price is on the far right */
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.total-label {
+  font-weight: bold;
+}
+
+.total-price {
+  font-weight: bold;
+}
+
+.place-order-btn {
+  padding: 10px 20px;
+  background-color: rgb(67, 196, 67);
+  width: 100%;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add transition effect */
+
+}
+
+.place-order-btn:hover {
+  background-color: rgb(1, 137, 1);
+}
+
 /* Cart icon style */
 .cart-icon-nav {
   height: 30px;
@@ -201,7 +233,7 @@
   justify-content: space-between; /* Space between details and image */
   align-items: center; /* Center align items vertically */
   padding: 10px 0; /* Padding for list items */
-  border-bottom: 1px solid #ddd; /* Optional: add a separator between items */
+  margin-bottom: 20px;
 }
 
 /* Style for the item details */

@@ -76,6 +76,10 @@ class App extends React.Component {
     });
   };
 
+  clearCart = () => {
+    this.setState({ cartItems: [] }); // Clears the cartItems array
+  };
+
   render() {
     return (
       <MyContext.Provider value={{ addToCart: this.addToCart, name:'batata' }}>
@@ -84,6 +88,7 @@ class App extends React.Component {
             cartItems={this.state.cartItems}
             incQuantity={this.incQuantity}
             decQuantity={this.decQuantity}
+            clearCart={this.clearCart}
           />
           <Switch>
             <Route

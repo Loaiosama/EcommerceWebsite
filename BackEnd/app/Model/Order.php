@@ -5,29 +5,32 @@ namespace app\Model;
 use PDO;
 
 class Order {
-    private $pdo;
+    private PDO $pdo;
 
     // Constructor to initialize PDO connection
-    public function __construct(PDO $pdo) {
+    public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
     // Function to create an order in the database
-    public function createOrder($productId, $quantity, $customerId) {
+    public function createOrder($productId, $name, $price, $size, $color, $capacity, $quantity) {
         try {
             // SQL query to insert the order into the orders table
-            $stmt = $this->pdo->prepare('
-                INSERT INTO Orders (product_id, quantity, customer_id, order_date)
-                VALUES (:product_id, :quantity, :customer_id, NOW())
-            ');
+            
+            
+            $stmt = $this->pdo->prepare("INSERT INTO orders (product_id, name, price, size, color, capacity, quantity) VALUES (:product_id, :name, :price, :size, :color, :capacity, :quantity)");
 
             // Bind the parameters with values
-            $stmt->bindParam(':product_id', $productId);
-            $stmt->bindParam(':quantity', $quantity);
-            $stmt->bindParam(':customer_id', $customerId);
+            $stmt->execute([
+                ':product_id' => $productId,
+                ':name' => $name,
+                ':price' => $price,
+                ':size' => $size,
+                ':color' => $color,
+                ':capacity' => $capacity,
+                ':quantity' => $quantity,
+            ]);
 
-            // Execute the query
-            $stmt->execute();
 
             // Return the ID of the inserted order
             return $this->pdo->lastInsertId();

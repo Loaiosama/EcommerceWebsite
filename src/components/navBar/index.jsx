@@ -12,7 +12,6 @@ export default class NavBar extends React.Component {
 
   previousTotalItems = 0; // To keep track of previous total items count
 
-
   handleTabClick = (tab) => {
     this.setState({ activeTab: tab });
   };
@@ -27,6 +26,11 @@ export default class NavBar extends React.Component {
     return this.props.cartItems.reduce((total, item) => total + item.quantity, 0);
   };
 
+  calculateTotalPrice() {
+    const { cartItems } = this.props; // Assuming cartItems is passed as a prop
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  }
+
   componentDidUpdate() {
     const totalItems = this.getTotalItems();
 
@@ -39,15 +43,67 @@ export default class NavBar extends React.Component {
     this.previousTotalItems = totalItems;
   }
 
+  // Function to send GraphQL mutation using fetch
+  placeOrder = () => {
+    const { cartItems } = this.props;
+
+    // Iterate over cartItems and execute the mutation for each item
+    cartItems.forEach((item) => {
+      const mutation = `
+        mutation {
+          addOrder(
+            product_id: "${item.id}",
+            name: "${item.name}",
+            price: ${item.price},
+            size: "${item.size}",
+            color: "${item.color}",
+            capacity: "${item.capacity}",
+            quantity: ${item.quantity}
+          )
+        }
+      `;
+
+      // Send the GraphQL request using fetch
+      fetch('http://localhost:8000/app/Graphql/graphql.php', {  // Replace with your actual GraphQL endpoint
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: mutation,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.errors) {
+            console.error("GraphQL Error:", data.errors);
+          } else {
+            console.log("Order placed successfully", data);
+            // After placing the order, clear the cart and close it
+            this.clearCartAndClose();
+          }
+        })
+        .catch((error) => {
+          console.error("Error placing order:", error);
+        });
+    });
+  };
+
+  // Function to clear the cart and close the modal
+  clearCartAndClose = () => {
+    this.props.clearCart();  // Assuming clearCart is passed as a prop to clear cart in the parent component
+    this.setState({ cartVisible: false });
+  };
+
   render() {
     const { cartItems, incQuantity, decQuantity } = this.props;
     const totalItems = this.getTotalItems(); // Get total items count
+    const totalPrice = this.calculateTotalPrice(); // Get the total price
 
     return (
       <>
         <nav className="navbar">
           <div className="navbar-left">
-
             <Link to="/women">
               <h3
                 className={this.state.activeTab === "WOMEN" ? "active" : ""}
@@ -103,32 +159,27 @@ export default class NavBar extends React.Component {
                     <div className="cart-item-details">
                       <h3 className="product-name-cart">{item.name}</h3>
                       <p className="cart-item-price">${item.price}</p>
-
-                    {item.size && (
-                      <div className="size-cart">
-                        <p>SIZE:</p>
-                        <span className="item-size-cart selected">{item.size}</span>
-                      </div>
-                    )}
-
-                    {item.color && (
-                      <div className="color-cart">
-                        <p>COLOR:</p>
-                        <span
-                          className="color-swatch-cart selected"
-                          style={{ backgroundColor: item.color.toLowerCase() }}
-                        ></span>
-                      </div>
-                    )}
-
-                    {item.capacity && (
-                      <div className="size-cart">
-                        <p>CAPACITY:</p>
-                        <span className="item-size-cart selected">{item.capacity}</span>
-                      </div>
-                    )}
-                      
-                      
+                      {item.size && (
+                        <div className="size-cart">
+                          <p>SIZE:</p>
+                          <span className="item-size-cart selected">{item.size}</span>
+                        </div>
+                      )}
+                      {item.color && (
+                        <div className="color-cart">
+                          <p>COLOR:</p>
+                          <span
+                            className="color-swatch-cart selected"
+                            style={{ backgroundColor: item.color.toLowerCase() }}
+                          ></span>
+                        </div>
+                      )}
+                      {item.capacity && (
+                        <div className="size-cart">
+                          <p>CAPACITY:</p>
+                          <span className="item-size-cart selected">{item.capacity}</span>
+                        </div>
+                      )}
                     </div>
 
                     <div className="cart-image-container">
@@ -153,7 +204,11 @@ export default class NavBar extends React.Component {
                 ))}
               </ul>
 
-              <button onClick={this.toggleCartVisibility}>Close</button>
+              <div className="cart-total-price">
+                <span className="total-label">Total:</span>
+                <span className="total-price">${totalPrice.toFixed(2)}</span>
+              </div>
+              <button className="place-order-btn" onClick={this.placeOrder}>PLACE ORDER</button> {/* Place Order button */}
             </div>
           </div>
         )}
