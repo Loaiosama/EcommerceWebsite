@@ -35,7 +35,7 @@ export default class Product extends React.Component {
     const { selectedImageIndex } = this.state;
 
     return (
-      <div className="product-gallery-container">
+      <div className="product-gallery-container" data-testid="product-gallery">
 
         <div className="thumbnail-container">
           {gallery.map((image, index) => (

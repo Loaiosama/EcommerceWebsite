@@ -2,16 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./index.css";
 import MyContext from "../../context/context";
-import logo from "../../assets/logo.png"; 
-import cart from "../../assets/shopping-cart.png"; 
+import logo from "../../assets/logo.png";
+import cart from "../../assets/shopping-cart.png";
 
 export default class NavBar extends React.Component {
   state = {
-    activeTab: "CLOTHES", 
-    cartVisible: false, 
+    activeTab: "CLOTHES",
+    cartVisible: false,
   };
 
-  previousTotalItems = 0; 
+  previousTotalItems = 0;
 
   handleTabClick = (tab) => {
     this.setState({ activeTab: tab });
@@ -28,7 +28,7 @@ export default class NavBar extends React.Component {
   };
 
   calculateTotalPrice() {
-    const { cartItems } = this.props; 
+    const { cartItems } = this.props;
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
@@ -42,7 +42,7 @@ export default class NavBar extends React.Component {
     this.previousTotalItems = totalItems;
   }
 
-  placeOrder = ({clearCart}) => {
+  placeOrder = ({ clearCart }) => {
     const { cartItems } = this.props;
 
     cartItems.forEach((item) => {
@@ -60,7 +60,7 @@ export default class NavBar extends React.Component {
         }
       `;
 
-      fetch('http://localhost:8000/app/Graphql/graphql.php', { 
+      fetch('http://localhost:8000/app/Graphql/graphql.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,14 +85,14 @@ export default class NavBar extends React.Component {
   };
 
   clearCartAndClose = (clearCart) => {
-    clearCart();  
+    clearCart();
     this.setState({ cartVisible: false });
   };
 
   render() {
     const { cartItems, incQuantity, decQuantity } = this.props;
     const totalItems = this.getTotalItems();
-    const totalPrice = this.calculateTotalPrice(); 
+    const totalPrice = this.calculateTotalPrice();
 
     return (
       <MyContext.Consumer>
@@ -100,7 +100,7 @@ export default class NavBar extends React.Component {
           <>
             <nav className="navbar">
               <div className="navbar-left">
-                <Link to="/clothes">
+                <Link to="/clothes" data-testid={this.state.activeTab === "CLOTHES" ? "active-category-link" : "category-link"}>
                   <h3
                     className={this.state.activeTab === "CLOTHES" ? "active" : ""}
                     onClick={() => this.handleTabClick("CLOTHES")}
@@ -109,7 +109,7 @@ export default class NavBar extends React.Component {
                   </h3>
                 </Link>
 
-                <Link to="/tech">
+                <Link to="/tech" data-testid={this.state.activeTab === "TECH" ? "active-category-link" : "category-link"}>
                   <h3
                     className={this.state.activeTab === "TECH" ? "active" : ""}
                     onClick={() => this.handleTabClick("TECH")}
@@ -117,7 +117,7 @@ export default class NavBar extends React.Component {
                     TECH
                   </h3>
                 </Link>
-                <Link to="/all">
+                <Link to="/all" data-testid={this.state.activeTab === "ALL" ? "active-category-link" : "category-link"}>
                   <h3
                     className={this.state.activeTab === "ALL" ? "active" : ""}
                     onClick={() => this.handleTabClick("ALL")}
@@ -147,33 +147,62 @@ export default class NavBar extends React.Component {
               <div className="modal" onClick={this.toggleCartVisibility}>
                 <div className="cart-window" onClick={(e) => e.stopPropagation()}>
                   <h4>
-                    My Bag. {totalItems >= 0 && `${totalItems} items`} 
+                    My Bag.
+                    <span className="cart-total" data-testid="cart-total" >
+                      {totalItems >= 0 && `${totalItems} items`}
+                    </span>
                   </h4>
                   <ul className="cart-items">
                     {cartItems.map((item) => (
-                      <li key={item.id} className="cart-item">
+                      <li key={item.id} className="cart-item" >
                         <div className="cart-item-details">
                           <h3 className="product-name-cart">{item.name}</h3>
                           <p className="cart-item-price">${item.price}</p>
-                          {item.size && (
+                          
+                          {item.sizeOptions.length > 0 && (
                             <div className="size-cart">
                               <p>SIZE:</p>
-                              <span className="item-size-cart selected">{item.size}</span>
+
+                              {item.sizeOptions.map((sizeOption) => (
+                                <span
+                                  key={sizeOption.value}
+                                  className={`item-size-cart ${item.size === sizeOption.value ? "selected" : ""}`}
+                                >
+                                  {sizeOption.value}
+                                </span>
+                              ))}
+
                             </div>
                           )}
-                          {item.color && (
+
+                          {item.colorOptions.length > 0 && (
                             <div className="color-cart">
                               <p>COLOR:</p>
-                              <span
-                                className="color-swatch-cart selected"
-                                style={{ backgroundColor: item.color.toLowerCase() }}
-                              ></span>
+                              <div className="color-swatches">
+                                {item.colorOptions.map((colorOption) => (
+                                  <span
+                                    key={colorOption.value}
+                                    className={`color-swatch-cart ${item.color === colorOption.value ? "selected" : ""}`}
+                                    style={{ backgroundColor: colorOption.display_value.toLowerCase() }}
+                                  ></span>
+                                ))}
+                              </div>
                             </div>
                           )}
-                          {item.capacity && (
+
+
+                          {item.capacityOptions.length > 0 && (
                             <div className="size-cart">
                               <p>CAPACITY:</p>
-                              <span className="item-size-cart selected">{item.capacity}</span>
+                              {item.capacityOptions.map((capacityOption) => (
+                                <span
+                                  key={capacityOption.value}
+                                  className={`item-size-cart ${item.capacity === capacityOption.value ? "selected" : ""}`}
+                                >
+                                  {capacityOption.value}
+                                </span>
+                              ))}
+
                             </div>
                           )}
                         </div>
@@ -182,14 +211,16 @@ export default class NavBar extends React.Component {
                           <div className="quantity-control">
                             <button
                               className="arrow-button-top"
-                              onClick={() => incQuantity(item.id)} 
+                              onClick={() => incQuantity(item.id)}
+                              data-testid="cart-item-amount-increase"
                             >
                               +
                             </button>
-                            <span>{item.quantity}</span>
+                            <span data-testid="cart-item-amount">{item.quantity}</span>
                             <button
                               className="arrow-button-bot"
-                              onClick={() => decQuantity(item.id)} 
+                              onClick={() => decQuantity(item.id)}
+                              data-testid="cart-item-amount-decrease"
                             >
                               -
                             </button>
@@ -204,7 +235,7 @@ export default class NavBar extends React.Component {
                     <span className="total-label">Total:</span>
                     <span className="total-price">${totalPrice.toFixed(2)}</span>
                   </div>
-                  <button className="place-order-btn" onClick={() => this.placeOrder(context)}>PLACE ORDER</button> 
+                  <button className="place-order-btn" onClick={() => this.placeOrder(context)}>PLACE ORDER</button>
                 </div>
               </div>
             )}

@@ -59,7 +59,7 @@ export default class Card extends React.Component {
         return (
             <MyContext.Consumer>
                 {context => (
-                    <div className={cardClass}>
+                    <div className={cardClass} data-testid={`product-${this.props.name.replaceAll(' ', '-')}`}>
                         {this.props.inStock ? (
                             <Link to={`/${this.props.category}/${this.props.id}`} className="card-link">
                                 <div className="img-container">

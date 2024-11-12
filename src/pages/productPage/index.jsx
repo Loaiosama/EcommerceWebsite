@@ -102,6 +102,14 @@ class ProductPage extends Component {
     const { productData, sizeChosen, colorChosen, capacityChosen } = this.state;
     const image = productData.gallery?.[0];
 
+    const sizeOptions = productData.category === "clothes"
+      ? productData.attributes.find(attr => attr.name === "Size")?.items || []
+      : [];
+    const colorOptions = productData.attributes.find(attr => attr.name === "Color")?.items || [];
+    const capacityOptions = productData.category === "tech"
+      ? productData.attributes.find(attr => attr.name === "Capacity")?.items || []
+      : [];
+
     const product = {
       id: productData.id,
       name: productData.name,
@@ -109,6 +117,9 @@ class ProductPage extends Component {
       size: sizeChosen,
       color: colorChosen,
       capacity: capacityChosen,
+      sizeOptions: sizeOptions,
+      colorOptions: colorOptions,
+      capacityOptions: capacityOptions,
       image: image
     };
 
@@ -198,11 +209,12 @@ class ProductPage extends Component {
                 className={this.canAddToCart() ? "addToCart" : "addToCart disabled"}
                 onClick={() => this.handleAddToCart(context)}
                 disabled={!this.canAddToCart()}
+                data-testid="add-to-cart"
               >
                 ADD TO CART
               </button>
 
-              <div className="description">
+              <div className="description" data-testid="product-description">
                 {parse(productData.description)}
               </div>
             </div>

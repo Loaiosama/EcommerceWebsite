@@ -61,7 +61,7 @@ export default class Clothes extends React.Component {
         <h1 className="title">Clothes</h1>
         <div className="items-container">
           {clothesData.map((item) => (
-            <Card key={item.id} {...item} category="clothes" />
+            <Card data-testid={`product-${item.name.replaceAll(' ', '-')}`} key={item.id} {...item} category="clothes" />
           ))}
         </div>
       </>

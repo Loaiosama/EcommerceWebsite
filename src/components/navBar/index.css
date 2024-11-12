@@ -139,10 +139,10 @@
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  width: 27%;
+  width: 30%;
   max-height: 80%;
   overflow-y: auto;
-  margin-left: 65%;
+  margin-left: 60%;
 }
 
 .cart-window h4 {
@@ -211,6 +211,10 @@
   flex: 1;
 }
 
+.cart-total{
+  margin-left: 5px;
+}
+
 .cart-image-container {
   display: flex;
   align-items: center;
@@ -268,6 +272,7 @@
 
 .item-size-cart {
   padding: 2px 5px;
+  width: 20px;
   margin-right: 5px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
@@ -287,13 +292,14 @@
 
 .color-cart {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Keeps "COLOR:" label on top */
   align-items: flex-start;
+
 }
 
 .color-swatches {
   display: flex;
-  gap: 6px;
+  gap: 4px;
 }
 
 .color-swatch-cart {
@@ -301,10 +307,12 @@
   height: 20px;
   border: 1px solid gray;
   cursor: default;
+  box-sizing: border-box;
 }
 
 .color-swatch-cart.selected {
   border: 2px solid black;
+  padding: 10px;
 }
 
 .product-name-cart {
