@@ -211,7 +211,7 @@ export default class NavBar extends React.Component {
                           <div className="quantity-control">
                             <button
                               className="arrow-button-top"
-                              onClick={() => incQuantity(item.id)}
+                              onClick={() => incQuantity(item.id, item.size, item.color, item.capacity)}
                               data-testid="cart-item-amount-increase"
                             >
                               +
@@ -219,7 +219,7 @@ export default class NavBar extends React.Component {
                             <span data-testid="cart-item-amount">{item.quantity}</span>
                             <button
                               className="arrow-button-bot"
-                              onClick={() => decQuantity(item.id)}
+                              onClick={() => decQuantity(item.id, item.size, item.color, item.capacity)}
                               data-testid="cart-item-amount-decrease"
                             >
                               -

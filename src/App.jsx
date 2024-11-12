@@ -39,11 +39,11 @@ class App extends React.Component {
     });
   };
 
-  incQuantity = (id) => {
+  incQuantity = (id, size, color, capacity) => {
     this.setState((prevState) => {
       return {
         cartItems: prevState.cartItems.map((item) =>
-          item.id === id
+          item.id === id && item.size === size && item.color === color && item.capacity === capacity
             ? { ...item, quantity: item.quantity + 1 }
             : item
         ),
@@ -51,11 +51,11 @@ class App extends React.Component {
     });
   };
 
-  decQuantity = (id) => {
+  decQuantity = (id, size, color, capacity) => {
     this.setState((prevState) => {
       const updatedCart = prevState.cartItems
         .map((item) => {
-          if (item.id === id) {
+          if (item.id === id && item.size === size && item.color === color && item.capacity === capacity) {
             if (item.quantity > 1) {
               return { ...item, quantity: item.quantity - 1 };
             } else {
