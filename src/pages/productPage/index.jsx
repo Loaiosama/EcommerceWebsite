@@ -152,7 +152,7 @@ class ProductPage extends Component {
               {category === "clothes" && (
                 <div className="size">
                   <p>SIZE:</p>
-                  <div className="size-options">
+                  <div className="size-options" data-testid={`cart-item-attribute-${"Size"}`}>
                     {sizeOptions.map((size, index) => (
                       <button
                         key={index}
@@ -169,7 +169,7 @@ class ProductPage extends Component {
               {colorOptions.length > 0 && (
                 <div className="color">
                   <p>COLOR:</p>
-                  <div className="color-options">
+                  <div className="color-options" data-testid={`cart-item-attribute-${"Color"}`}>
                     {colorOptions.map((color, index) => (
                       <button
                         key={index}
@@ -186,7 +186,7 @@ class ProductPage extends Component {
               {category === "tech" && capacityOptions.length > 0 && (
                 <div className="size">
                   <p>CAPACITY:</p>
-                  <div className="size-options">
+                  <div className="size-options" data-testid={`cart-item-attribute-${"Capacity"}`}>
                     {capacityOptions.map((capacity, index) => (
                       <button
                         key={index}

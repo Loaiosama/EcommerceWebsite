@@ -132,7 +132,7 @@ export default class NavBar extends React.Component {
               </div>
 
               <div className="navbar-right">
-                <div className="cart-icon-container" onClick={this.toggleCartVisibility}>
+                <div data-testid="cart-btn" className="cart-icon-container" onClick={this.toggleCartVisibility}>
                   <img src={cart} className="cart-icon-nav" alt="Cart Icon" />
                   {totalItems > 0 && (
                     <div className="cart-notification">
@@ -160,13 +160,14 @@ export default class NavBar extends React.Component {
                           <p className="cart-item-price">${item.price}</p>
                           
                           {item.sizeOptions.length > 0 && (
-                            <div className="size-cart">
+                            <div className="size-cart" data-testid={`cart-item-attribute-${"Size"}`}>
                               <p>SIZE:</p>
 
                               {item.sizeOptions.map((sizeOption) => (
                                 <span
                                   key={sizeOption.value}
                                   className={`item-size-cart ${item.size === sizeOption.value ? "selected" : ""}`}
+                                  data-testid={`cart-item-attribute-${"Size"}-${"Size"}${item.size === sizeOption.value ? "-selected": ""} `}
                                 >
                                   {sizeOption.value}
                                 </span>
@@ -176,14 +177,15 @@ export default class NavBar extends React.Component {
                           )}
 
                           {item.colorOptions.length > 0 && (
-                            <div className="color-cart">
+                            <div className="color-cart" >
                               <p>COLOR:</p>
-                              <div className="color-swatches">
+                              <div className="color-swatches" data-testid={`cart-item-attribute-${"Color"}`}>
                                 {item.colorOptions.map((colorOption) => (
                                   <span
                                     key={colorOption.value}
                                     className={`color-swatch-cart ${item.color === colorOption.value ? "selected" : ""}`}
                                     style={{ backgroundColor: colorOption.display_value.toLowerCase() }}
+                                    data-testid={`cart-item-attribute-${"Color"}-${"Color"}${item.color === colorOption.value ? "-selected": ""} `}
                                   ></span>
                                 ))}
                               </div>
@@ -192,12 +194,13 @@ export default class NavBar extends React.Component {
 
 
                           {item.capacityOptions.length > 0 && (
-                            <div className="size-cart">
+                            <div className="size-cart" data-testid={`cart-item-attribute-${"Capacity"}`}>
                               <p>CAPACITY:</p>
                               {item.capacityOptions.map((capacityOption) => (
                                 <span
                                   key={capacityOption.value}
                                   className={`item-size-cart ${item.capacity === capacityOption.value ? "selected" : ""}`}
+                                  data-testid={`cart-item-attribute-${"Capacity"}-${"Capacity"}${item.capacity === capacityOption.value ? "-selected": ""} `}
                                 >
                                   {capacityOption.value}
                                 </span>
