@@ -26,7 +26,7 @@ class App extends React.Component {
       if (existingProduct) {
         return {
           cartItems: prevState.cartItems.map((item) =>
-            item.id === product.id
+            item.id === product.id && item.size === product.size && item.color === product.color && item.capacity === product.capacity
               ? { ...item, quantity: item.quantity + 1 }
               : item
           ),

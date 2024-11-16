@@ -35,6 +35,14 @@ export default class Card extends React.Component {
                 const size = product.attributes.find(attr => attr.name === "Size")?.items[0]?.value || null;
                 const color = product.attributes.find(attr => attr.name === "Color")?.items[0]?.value || null;
                 const capacity = product.attributes.find(attr => attr.name === "Capacity")?.items[0]?.value || null;
+                
+                const sizeOptions = product.category === "clothes"
+                    ? product.attributes.find(attr => attr.name === "Size")?.items || []
+                    : [];
+                const colorOptions = product.attributes.find(attr => attr.name === "Color")?.items || [];
+                const capacityOptions = product.category === "tech"
+                    ? product.attributes.find(attr => attr.name === "Capacity")?.items || []
+                    : [];
 
                 const productToAdd = {
                     id: product.id,
@@ -43,6 +51,9 @@ export default class Card extends React.Component {
                     size,
                     color,
                     capacity,
+                    sizeOptions,
+                    colorOptions,
+                    capacityOptions,
                     image: product.gallery[0]
                 };
 
