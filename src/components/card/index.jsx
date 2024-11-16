@@ -28,7 +28,7 @@ export default class Card extends React.Component {
     addItemToCart = ({addToCart}) => {
         const { id } = this.props;
 
-        request('http://localhost:8000/app/Graphql/graphql.php', PRODUCT_QUERY, { id })
+        request('https://php-backend-scandi-f01df9736f18.herokuapp.com/', PRODUCT_QUERY, { id })
             .then((data) => {
                 const product = data.product;
 

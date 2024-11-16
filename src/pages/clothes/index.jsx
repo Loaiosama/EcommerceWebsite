@@ -24,7 +24,7 @@ export default class Clothes extends React.Component {
       category: "clothes",
     };
 
-    fetch("http://localhost:8000/app/Graphql/graphql.php", {
+    fetch('https://php-backend-scandi-f01df9736f18.herokuapp.com/', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

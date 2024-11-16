@@ -42,7 +42,7 @@ class ProductPage extends Component {
   componentDidMount() {
     const productId = this.props.match?.params?.id;
 
-    request('http://localhost:8000/app/Graphql/graphql.php', PRODUCT_QUERY, { id: productId })
+    request('https://php-backend-scandi-f01df9736f18.herokuapp.com/', PRODUCT_QUERY, { id: productId })
       .then((data) => {
         const product = data.product;
         this.setState({
